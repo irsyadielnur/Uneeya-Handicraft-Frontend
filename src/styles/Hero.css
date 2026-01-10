@@ -1,0 +1,40 @@
+.flow-bg img {
+  position: absolute;
+  background: none;
+  width: 130px;
+  filter: drop-shadow(20px 20px 10px rgba(0, 0, 0, 0.3));
+  pointer-events: none;
+}
+
+.flow-bg :nth-child(1) {
+  top: -2rem;
+  left: 20rem;
+  rotate: 70deg;
+}
+
+.flow-bg :nth-child(2) {
+  top: -2rem;
+  right: 21rem;
+  rotate: 30deg;
+}
+
+.flow-bg :nth-child(3) {
+  top: 9rem;
+  right: 10px;
+  rotate: 20deg;
+}
+.flow-bg :nth-child(4) {
+  bottom: 1.5rem;
+  right: 20rem;
+  rotate: -25deg;
+}
+.flow-bg :nth-child(5) {
+  bottom: 2.5rem;
+  left: 20rem;
+  rotate: 25deg;
+}
+.flow-bg :nth-child(6) {
+  top: 9rem;
+  left: 1rem;
+  rotate: -15deg;
+}

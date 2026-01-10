@@ -1,0 +1,40 @@
+/* search button */
+.search-box {
+  justify-self: start;
+  display: flex;
+  align-items: center;
+  width: 30px;
+  height: 30px;
+  background: none;
+  border-radius: 50px;
+  overflow: hidden;
+  border: none;
+  transition: width 0.4s ease;
+}
+
+.search-box:focus-within {
+  width: 350px;
+  border: 0.5px solid #2a2a2a;
+}
+
+.search-box input {
+  border: none;
+  outline: none;
+  font-size: 14px;
+  opacity: 0; /* default tidak terlihat */
+  width: 0;
+  transition: opacity 0.4s ease, width 0.4s ease;
+  background: none;
+}
+
+.search-box:focus-within input {
+  opacity: 1;
+  width: 100%;
+  padding: 0 1rem;
+}
+
+@media screen and (max-width: 768px) {
+  .search-box {
+    display: none;
+  }
+}

@@ -1,0 +1,166 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+@import 'tailwindcss';
+
+:root {
+  font-family: 'Poppins', sans-serif;
+  color: #2a2a2a;
+
+  --background-color: #fffefa;
+  --primary-color: #8ecae6;
+  --secondary-color: #fffcec;
+  --button-color: #ffc343;
+  --footer-color: #8d99ae;
+}
+
+.bg-cream {
+  background-color: var(--background-color);
+}
+
+.bg-hero {
+  background-color: var(--primary-color);
+}
+
+.btn-color {
+  background-color: var(--button-color);
+}
+
+.bg-cream-2 {
+  background-color: var(--secondary-color);
+}
+
+::-webkit-scrollbar {
+  height: 6px;
+  width: 6px;
+  background: var(--background-color);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--button-color);
+  -webkit-border-radius: 1ex;
+}
+
+::-webkit-scrollbar-corner {
+  background: var(--background-color);
+}
+
+body {
+  background-color: var(--background-color);
+}
+
+body.scroll-locked {
+  overflow: hidden !important; /* Hapus class ini jika ada script lain yg menambahkannya */
+}
+
+.bg-btn {
+  background-color: var(--button-color);
+}
+
+/* Icon Button */
+.btn-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  padding: 3px;
+  cursor: pointer;
+  background: none;
+  border-radius: 50%;
+  transition: 0.05s ease-in-out;
+}
+
+.btn-icon:active,
+.btn-icon:hover {
+  background-color: var(--button-color);
+}
+
+.btn-icon:active {
+  transform: scale(0.85);
+}
+
+/* .btn-icon img {
+  width: 25px;
+  height: 25px;
+} */
+
+.btn-icon-2 {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #2a2a2a00;
+  padding: 4px;
+  cursor: pointer;
+  background-color: var(--button-color);
+  border-radius: 50%;
+  transition: 0.1s ease-in-out;
+}
+
+.btn-icon-2:hover {
+  transform: scale(1.2);
+}
+
+.btn-icon-2:active {
+  transform: scale(1);
+}
+
+/* Print Style */
+@media print {
+  aside,
+  header,
+  nav,
+  button,
+  footer,
+  .print\:hidden {
+    display: none !important;
+  }
+
+  #print-area {
+    width: 100% !important;
+    position: absolute;
+    top: 0;
+    left: 0;
+    margin: 0;
+    padding: 0;
+    box-shadow: none;
+  }
+
+  body {
+    background-color: white;
+  }
+}
+
+/* Animasi Lambaian Tangan (Wave) */
+@keyframes wave {
+  0% {
+    transform: rotate(0deg);
+  }
+  10% {
+    transform: rotate(15deg);
+  }
+  20% {
+    transform: rotate(-8deg);
+  }
+  30% {
+    transform: rotate(15deg);
+  }
+  40% {
+    transform: rotate(-4deg);
+  }
+  50% {
+    transform: rotate(10deg);
+  }
+  60% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(0deg);
+  }
+}
+
+.wave-emoji {
+  display: inline-block;
+  transform-origin: 70% 70%;
+}
+
+.group:hover .wave-emoji {
+  animation: wave 2s infinite;
+}
