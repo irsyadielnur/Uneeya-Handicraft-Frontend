@@ -129,7 +129,7 @@ const Footer = () => {
               </li>
               <li className="flex items-center gap-3">
                 <FaEnvelope className="text-yellow-600 shrink-0" />
-                <span>halo@uneeya.com</span>
+                <span>{shop?.email_address ? `@${shop.email_address}` : '-'}</span>
               </li>
             </ul>
           </div>

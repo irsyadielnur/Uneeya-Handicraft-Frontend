@@ -5,6 +5,7 @@ import AdminLayout from '../../components/layouts/AdminLayout';
 import api from '../../config/api';
 import toast from 'react-hot-toast';
 import { FaSave, FaStore, FaInstagram, FaTiktok, FaWhatsapp, FaMapMarkerAlt, FaImage } from 'react-icons/fa';
+import { IoIosMail } from 'react-icons/io';
 
 const ManageShop = () => {
   const dispatch = useDispatch();
@@ -23,6 +24,7 @@ const ManageShop = () => {
     city_id: '',
     city_name: '',
     full_address: '',
+    email_address: '',
   });
 
   const [logoFile, setLogoFile] = useState(null);
@@ -48,6 +50,7 @@ const ManageShop = () => {
           city_id: data.city_id || '',
           city_name: data.city_name || '',
           full_address: data.full_address || '',
+          email_address: data.email_address || '',
         });
 
         if (data.logo_url) {
@@ -206,6 +209,15 @@ const ManageShop = () => {
                 <div className="flex">
                   <span className="bg-gray-100 border border-r-0 p-2 rounded-l text-gray-500 text-sm">@</span>
                   <input type="text" name="tiktok_username" value={formData.tiktok_username} onChange={handleChange} className="w-full border rounded-r p-2" />
+                </div>
+              </div>
+              <div>
+                <label className="text-sm font-semibold mb-1 flex items-center gap-2">
+                  <IoIosMail className="text-black" /> Email Address
+                </label>
+                <div className="flex">
+                  <span className="bg-gray-100 border border-r-0 p-2 rounded-l text-gray-500 text-sm">@</span>
+                  <input type="text" name="email_address" value={formData.email_address} onChange={handleChange} className="w-full border rounded-r p-2" />
                 </div>
               </div>
             </div>
