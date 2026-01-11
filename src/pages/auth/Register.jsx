@@ -46,7 +46,7 @@ const Register = () => {
       const userId = resultAction.payload.user_id;
       toast.success('Registrasi berhasil! Cek email untuk kode OTP.');
 
-      navigate('/verify-otp', {
+      navigate('/login', {
         state: {
           email: formData.email,
           userId: userId,

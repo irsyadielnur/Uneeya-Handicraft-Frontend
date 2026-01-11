@@ -12,7 +12,6 @@ import AdminRoute from './components/AdminRoute';
 
 import Login from './pages/auth/Login';
 import Register from './pages/auth/Register';
-import VerifyOtp from './pages/auth/VerifyOtp';
 
 import Navbar from './components/Navbar';
 import Home from './pages/Home';
@@ -48,7 +47,6 @@ const AppContent = () => {
   const hideNavbarPaths = [
     '/login',
     '/register',
-    '/verify-otp',
     '/admin/dashboard',
     '/admin/products',
     '/admin/products/create',
@@ -65,7 +63,7 @@ const AppContent = () => {
     '/admin/chat',
   ];
 
-  const showLayout = !hideNavbarPaths.some((path) => location.pathname.startsWith(path)) && !['/login', '/register', '/verify-otp'].includes(location.pathname);
+  const showLayout = !hideNavbarPaths.some((path) => location.pathname.startsWith(path)) && !['/login', '/register'].includes(location.pathname);
 
   const dispatch = useDispatch();
   const { isAuthenticated, user } = useSelector((state) => state.auth);
@@ -88,7 +86,6 @@ const AppContent = () => {
           <Route element={<GuestRoute />}>
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
-            <Route path="/verify-otp" element={<VerifyOtp />} />
           </Route>
 
           {/* Route untuk Pengunjung */}

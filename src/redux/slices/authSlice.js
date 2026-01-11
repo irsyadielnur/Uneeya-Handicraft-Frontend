@@ -1,16 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import api from '../../config/api';
 
-// 0. Thunk untuk Verifikasi OTP
-export const verifyOtp = createAsyncThunk('auth/verifyOtp', async (data, { rejectWithValue }) => {
-  try {
-    const response = await api.post('/api/auth/verify-otp', data);
-    return response.data;
-  } catch (error) {
-    return rejectWithValue(error.response?.data?.message || 'Verifikasi OTP gagal');
-  }
-});
-
 // 1. Thunk untuk Login
 export const loginUser = createAsyncThunk('auth/loginUser', async (credentials, { rejectWithValue }) => {
   try {
@@ -94,19 +84,6 @@ const authSlice = createSlice({
         state.isLoading = false;
       })
       .addCase(registerUser.rejected, (state, action) => {
-        state.isLoading = false;
-        state.error = action.payload;
-      })
-
-      // Handler Verify OTP
-      .addCase(verifyOtp.pending, (state) => {
-        state.isLoading = true;
-        state.error = null;
-      })
-      .addCase(verifyOtp.fulfilled, (state) => {
-        state.isLoading = false;
-      })
-      .addCase(verifyOtp.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload;
       });
