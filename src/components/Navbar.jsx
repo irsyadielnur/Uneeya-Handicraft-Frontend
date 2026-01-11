@@ -96,22 +96,22 @@ const Navbar = () => {
             </Link>
           </div>
 
-          <div className="flex justify-end items-center gap-3 md:gap-6 flex-1 md:flex-none">
+          <div className="flex justify-end items-center gap-5 md:gap-7 flex-1 md:flex-none">
             {isAuthenticated ? (
               <>
                 <Link to="/favorite" className="relative btn-icon">
-                  <FaRegHeart className="text-gray-800 w-4 h-4 md:w-6.25 md:h-6.25" />
+                  <FaRegHeart className="text-gray-800 w-6.25 h-6.25" />
                   {favoriteCount > 0 && <span className="absolute -top-1 -right-1 flex h-3 w-3 md:h-4 md:w-4 items-center justify-center rounded-full bg-red-300 text-[8px] md:text-[10px] text-black font-semibold">{favoriteCount}</span>}
                 </Link>
 
                 <Link to="/cart" className="relative btn-icon">
-                  <img src={bagBtn} alt="shopping bag" className="w-4 h-4 md:w-6.25 md:h-6.25" />
+                  <img src={bagBtn} alt="shopping bag" className="w-6.25 h-6.25" />
                   {cartCount > 0 && <span className="h-3 w-3 md:h-4 md:w-4 absolute -top-1 -right-1 flex items-center justify-center rounded-full bg-yellow-500 text-[8px] md:text-[10px] text-black font-semibold">{cartCount}</span>}
                 </Link>
 
                 <Menu as="div" className="relative inline-block">
                   <MenuButton className="btn-icon">
-                    <img src={getAvatarUrl(user?.profile_pic)} alt="profile" className="w-6 h-6 md:w-7 md:h-7 rounded-full object-cover border border-gray-200" />
+                    <img src={getAvatarUrl(user?.profile_pic)} alt="profile" className="w-7 h-7 rounded-full object-cover border border-gray-200" />
                   </MenuButton>
 
                   <MenuItems
