@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { fetchFavorites } from './redux/slices/favoriteSlice';
 import { Toaster } from 'react-hot-toast';
@@ -231,6 +231,8 @@ const AppContent = () => {
               </AdminRoute>
             }
           />
+
+          <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
 
         {showLayout && <Footer />}
