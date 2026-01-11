@@ -238,7 +238,7 @@ const AppContent = () => {
 
         {showLayout && <Footer />}
       </div>
-      {showLayout && isAuthenticated && user?.role_id === 1 && <Chatbot />}
+      {showLayout && <Chatbot />}
       {showLayout && isAuthenticated && user?.role_id === 1 && <CustomerServiceChat />}
     </>
   );

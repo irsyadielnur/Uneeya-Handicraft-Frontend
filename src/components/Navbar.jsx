@@ -47,7 +47,7 @@ const Navbar = () => {
   const favoriteCount = favoriteItems.length;
 
   const getAvatarUrl = (path) => {
-    if (!path) return `https://avatar.iran.liara.run/public`;
+    if (!path) return `https://ui-avatars.com/api/?name=${user?.username}`;
     if (path.startsWith('http')) return path;
     const cleanPath = path.startsWith('/') ? path.substring(1) : path;
     return `${BASE_URL}/${cleanPath}`;

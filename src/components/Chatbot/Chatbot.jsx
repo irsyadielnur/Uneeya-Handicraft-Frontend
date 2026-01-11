@@ -154,7 +154,7 @@ const Chatbot = () => {
       {/* 3. TOGGLE BUTTON (Floating) */}
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className={`group fixed bottom-27 md:bottom-24 right-5 z-51 flex items-center gap-2 w-12 h-12 md:w-14 md:h-14 rounded-full bg-[#8ecae6] border border-[#2b2b2b] shadow-[0_4px_10px_rgba(0,0,0,0.2)] justify-center cursor-pointer transition-all duration-300 ease-in-out hover:scale-110 active:scale-90 ${
+        className={`group fixed bottom-10 md:bottom-5 right-5 z-51 flex items-center gap-2 w-12 h-12 md:w-14 md:h-14 rounded-full bg-[#8ecae6] border border-[#2b2b2b] shadow-[0_4px_10px_rgba(0,0,0,0.2)] justify-center cursor-pointer transition-all duration-300 ease-in-out hover:scale-110 active:scale-90 ${
           isOpen ? 'rotate-90 bg-[#ff6b6b] border-none' : 'rotate-0'
         }
         `}
