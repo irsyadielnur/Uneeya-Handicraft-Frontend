@@ -99,11 +99,11 @@ const CustomerReviews = () => {
         }
 
         .animate-marquee {
-            animation: marquee 30s linear infinite; 
+            animation: marquee 20s linear infinite; 
         }
 
         .animate-marquee-reverse {
-            animation: marquee-reverse 30s linear infinite;
+            animation: marquee-reverse 20s linear infinite;
         }
 
         .animate-marquee:hover,

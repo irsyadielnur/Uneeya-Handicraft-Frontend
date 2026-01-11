@@ -44,7 +44,7 @@ const Register = () => {
 
     if (registerUser.fulfilled.match(resultAction)) {
       const userId = resultAction.payload.user_id;
-      toast.success('Registrasi berhasil! Cek email untuk kode OTP.');
+      toast.success('Registrasi berhasil!');
 
       navigate('/login', {
         state: {
