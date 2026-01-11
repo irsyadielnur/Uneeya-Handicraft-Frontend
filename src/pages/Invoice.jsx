@@ -39,10 +39,10 @@ const Invoice = () => {
   return (
     <div className="min-h-screen bg-cream pt-6 pb-12 px-4">
       <div className="max-w-4xl mx-auto mb-6 flex justify-between items-center print:hidden">
-        <Link to="/history" className="flex items-center gap-2 text-gray-600 hover:text-black font-medium">
+        <Link to="/history" className="flex items-center gap-2 text-gray-600 hover:text-black text-xs md:text-sm font-medium ">
           <FaArrowLeft /> Kembali ke Riwayat
         </Link>
-        <button onClick={handlePrint} className="bg-[#8ecae6] text-sm text-gray-800 px-4 py-1 rounded-lg flex items-center gap-2 hover:bg-green-500 hover:text-black cursor-pointer transition-all duration-200 active:scale-95">
+        <button onClick={handlePrint} className="bg-[#8ecae6] text-xs md:text-sm text-gray-800 px-4 py-1 rounded-lg flex items-center gap-2 hover:bg-green-500 hover:text-black cursor-pointer transition-all duration-200 active:scale-95">
           <FaPrint /> Cetak / Simpan PDF
         </button>
       </div>
