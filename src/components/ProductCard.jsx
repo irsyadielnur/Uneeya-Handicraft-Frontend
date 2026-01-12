@@ -18,10 +18,10 @@ const ProductCard = ({ product, label, labelColor }) => {
   const isOutOfStock = totalStock <= 0;
 
   const getImageUrl = (item) => {
-    if (!path) return `https://via.assets.so/img.jpg?w=300&h=300&bg=fce7f3&f=png`;
-    if (path.startsWith('http')) return path;
-    const cleanPath = path.startsWith('/') ? path.substring(1) : path;
-    return `${BASE_URL}/${cleanPath}`;
+    if (item.ProductImages && item.ProductImages.length > 0) {
+      return `${BASE_URL}${item.ProductImages[0].image_url}`;
+    }
+    return 'https://via.assets.so/img.jpg?w=300&h=300&bg=fce7f3&f=png';
   };
 
   const formatRupiah = (number) => {
