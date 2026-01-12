@@ -240,6 +240,8 @@ const CustomerServiceChat = () => {
   return (
     <>
       {isOpen && <div className="fixed inset-0 z-40 bg-black/5" onClick={() => setIsOpen(false)}></div>}
+
+      {/* TOGGLE BUTTON (Floating) */}
       <button
         onClick={toggleChat}
         className={`group fixed bottom-27 md:bottom-24 right-5 z-50 flex items-center gap-2 w-12 h-12 md:w-14 md:h-14 rounded-full bg-[#8ecae6] border border-[#2b2b2b] shadow-[0_4px_10px_rgba(0,0,0,0.2)] justify-center cursor-pointer transition-all duration-300 ease-in-out hover:scale-110 active:scale-90 ${
@@ -262,7 +264,7 @@ const CustomerServiceChat = () => {
 
       {/* JENDELA CHAT */}
       <div
-        className={`fixed bottom-0 md:bottom-4 right-0 md:right-24 z-998 w-full h-full md:w-100 md:h-11/12 bg-white md:rounded-2xl shadow-2xl border border-gray-300 flex flex-col overflow-hidden font-poppins transition-all duration-300 ease-out origin-bottom-right ${
+        className={`fixed bottom-0 right-0 md:bottom-4 md:right-24 z-998 w-full h-full md:w-100 md:h-11/12 bg-[#fffefa] md:rounded-2xl shadow-2xl border border-[#a3a6d6] flex flex-col overflow-hidden font-poppins transition-all duration-300 ease-out origin-bottom-right ${
           isOpen ? 'scale-100 opacity-100 translate-y-0' : 'scale-0 opacity-0 translate-y-10 pointer-events-none'
         }`}
       >

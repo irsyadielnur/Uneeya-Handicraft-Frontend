@@ -151,7 +151,7 @@ const Chatbot = () => {
     <>
       {isOpen && <div className="fixed inset-0 z-40 bg-black/5" onClick={() => setIsOpen(false)}></div>}
 
-      {/* 3. TOGGLE BUTTON (Floating) */}
+      {/* TOGGLE BUTTON (Floating) */}
       <button
         onClick={() => setIsOpen(!isOpen)}
         className={`group fixed bottom-10 md:bottom-5 right-5 z-51 flex items-center gap-2 w-12 h-12 md:w-14 md:h-14 rounded-full bg-[#8ecae6] border border-[#2b2b2b] shadow-[0_4px_10px_rgba(0,0,0,0.2)] justify-center cursor-pointer transition-all duration-300 ease-in-out hover:scale-110 active:scale-90 ${
@@ -169,7 +169,7 @@ const Chatbot = () => {
         )}
       </button>
 
-      {/* 2. CHAT WINDOW CONTAINER */}
+      {/* CHAT WINDOW CONTAINER */}
       <div
         className={`
           fixed bottom-0 right-0 md:bottom-4 md:right-24 z-999 font-poppins
