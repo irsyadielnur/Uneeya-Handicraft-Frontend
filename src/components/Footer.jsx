@@ -31,14 +31,7 @@ const Footer = () => {
           {/* Kolom 1: Brand Info */}
           <div className="space-y-4 text-center md:text-left">
             <div className="flex items-center justify-center md:justify-start gap-2">
-              <img
-                src={getImageUrl(shop?.logo_url)}
-                alt="Shop Logo"
-                className="w-8 h-8"
-                onError={(e) => {
-                  e.target.src = { uneeyaLogo };
-                }}
-              />
+              <img src={getImageUrl(shop?.logo_url)} alt="Shop Logo" className="w-8 h-8" />
               <h2 className="text-xl font-bold text-gray-900">{shop?.shop_name}</h2>
             </div>
             <p className="text-gray-600 text-sm leading-relaxed">Menghadirkan kehangatan kerajinan tangan berkualitas tinggi. Setiap produk dibuat dengan cinta dan ketelitian untuk Anda yang istimewa.</p>

@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { fetchCart, updateCartItemQty, removeCartItem } from '../redux/slices/cartSlice';
 import { FaTrash, FaMinus, FaPlus } from 'react-icons/fa';
+import { getImageUrl } from '../utils/imageHelper';
 import toast from 'react-hot-toast';
 import Swal from 'sweetalert2';
 
@@ -12,7 +13,6 @@ const Cart = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { items: cartItems, status } = useSelector((state) => state.cart || { items: [] });
-  const BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
   useEffect(() => {
     dispatch(fetchCart());
@@ -71,13 +71,6 @@ const Cart = () => {
     }
   };
 
-  const getImageUrl = (item) => {
-    if (item.Product?.ProductImages && item.Product.ProductImages.length > 0) {
-      return `${BASE_URL}${item.Product.ProductImages[0].image_url}`;
-    }
-    return 'https://via.assets.so/img.jpg?w=300&h=300&bg=fce7f3&f=png';
-  };
-
   if (status === 'loading' && cartItems.length === 0) {
     return <div className="min-h-screen pt-24 text-center">Memuat keranjang...</div>;
   }
@@ -99,7 +92,14 @@ const Cart = () => {
                 {/* Image */}
                 <div className="w-16 h-16 sm:w-24 sm:h-24 bg-gray-300 rounded-md overflow-hidden shrink-0 border border-gray-500 active:scale-95">
                   <Link to={`/product/${item.product_id}`}>
-                    <img src={getImageUrl(item)} alt={item.product_name} className="w-full h-full object-cover hover:scale-105 transition-transform duration-500" />
+                    <img
+                      src={getImageUrl(item.Product.ProductImages[0].image_url)}
+                      alt={item.product_name}
+                      className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
+                      onError={(e) => {
+                        e.target.src = 'https://via.assets.so/img.jpg?w=300&h=300&bg=fce7f3&f=png';
+                      }}
+                    />
                   </Link>
                 </div>
 

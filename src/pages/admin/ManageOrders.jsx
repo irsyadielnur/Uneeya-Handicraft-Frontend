@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import AdminLayout from '../../components/layouts/AdminLayout';
+import { getImageUrl } from '../../utils/imageHelper';
 import api from '../../config/api';
 import toast from 'react-hot-toast';
 import { FaEye, FaTruck, FaBoxOpen, FaTimes, FaMoneyBillWave, FaSearch } from 'react-icons/fa';
@@ -321,7 +322,14 @@ const ManageOrders = () => {
                       <div className="flex items-start gap-3">
                         {/* Gambar Produk */}
                         <div className="w-14 h-14 bg-gray-200 rounded-md overflow-hidden shrink-0 border">
-                          <div className="w-full h-full flex items-center justify-center text-gray-400 text-xs">Img</div>
+                          <img
+                            src={getImageUrl(item.Product.ProductImages[0].image_url)}
+                            alt={item.Product?.name}
+                            className="w-full h-full flex items-center justify-center text-gray-400 text-xs"
+                            onError={(e) => {
+                              e.target.src = 'https://via.assets.so/img.jpg?w=300&h=300&bg=fce7f3&f=png';
+                            }}
+                          />
                         </div>
 
                         <div>

@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useParams, Link } from 'react-router-dom';
 import { addItemToCart } from '../redux/slices/cartSlice';
+import { getImageUrl } from '../utils/imageHelper';
 import SimilarProductsByID from '../components/SimilarProductsByID';
 import toast from 'react-hot-toast';
 import api from '../config/api';
@@ -100,12 +101,8 @@ const ProductDetail = () => {
     }
   };
 
-  const getFullImageUrl = (path) => {
-    return path ? `${BASE_URL}${path}` : 'https://via.assets.so/img.jpg?w=300&h=300&bg=e5e7eb&f=png';
-  };
-
   const getAvatarUrl = (path) => {
-    if (!path) return 'https://via.assets.so/img.jpg?w=100&h=100&bg=e5e7eb&f=png';
+    if (!path) return 'https://ui-avatars.com/api/?name=${user?.username}';
     if (path.startsWith('http')) return path;
     const cleanPath = path.startsWith('/') ? path.substring(1) : path;
     return `${BASE_URL}/${cleanPath}`;
@@ -162,7 +159,7 @@ const ProductDetail = () => {
             {/* Product Image */}
             <div className="p-3 bg-cream-2 flex flex-col items-center justify-center">
               <div className="w-full aspect-square bg-cream-2 rounded-xl overflow-hidden shadow-sm mb-4 border border-gray-200">
-                <img src={getFullImageUrl(activeImage)} alt={product.name} className="w-full h-full object-cover hover:scale-105 transition-transform duration-500" />
+                <img src={getImageUrl(activeImage)} alt={product.name} className="w-full h-full object-cover hover:scale-105 transition-transform duration-500" />
               </div>
 
               {/* Thumbnails */}
@@ -174,7 +171,7 @@ const ProductDetail = () => {
                       onClick={() => setActiveImage(img.image_url)}
                       className={`w-16 h-16 rounded-lg overflow-hidden border shrink-0 cursor-pointer transition-all ${activeImage === img.image_url ? 'border-primary ring-2 ring-primary/20' : 'border-transparent hover:border-gray-600'}`}
                     >
-                      <img src={getFullImageUrl(img.image_url)} className="w-full h-full object-cover" alt="thumb" />
+                      <img src={getImageUrl(img.image_url)} className="w-full h-full object-cover" alt="thumb" />
                     </button>
                   ))}
                 </div>

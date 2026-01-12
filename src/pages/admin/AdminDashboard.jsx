@@ -9,6 +9,7 @@ import { XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, AreaChart, A
 const AdminDashboard = () => {
   const [stats, setStats] = useState(null);
   const [loading, setLoading] = useState(true);
+  const BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
   useEffect(() => {
     const fetchStats = async () => {
@@ -200,7 +201,7 @@ const AdminDashboard = () => {
                 stats?.outOfStockProducts?.map((item, idx) => (
                   <div key={idx} className="flex items-center gap-3 border-b border-gray-50 last:border-0 pb-2 last:pb-0">
                     <img
-                      src={getImageUrl(product.ProductImages?.[0]?.image_url)}
+                      src={getImageUrl(item.Product.ProductImages?.[0]?.image_url)}
                       className="w-10 h-10 rounded-md object-cover bg-gray-200 border border-gray-200"
                       alt={item.Product?.name}
                       onError={(e) => {

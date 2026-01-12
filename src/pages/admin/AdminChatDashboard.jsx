@@ -105,6 +105,7 @@ const AdminChatDashboard = () => {
     if (!socket) return;
     const handleReceiveMessage = async (newMessage) => {
       const isCurrentRoom = selectedRoomRef.current && newMessage.room_id === selectedRoomRef.current.chatroom_id;
+      if (newMessage.sender_id === user?.user_id) return;
 
       if (isCurrentRoom) {
         setMessages((prev) => [...prev, newMessage]);
@@ -374,9 +375,9 @@ const AdminChatDashboard = () => {
                     <div className="flex items-center gap-3">
                       <div className="relative">
                         <img
-                          src={room.user?.profile_pic ? `${BASE_URL}${room.user?.profile_pic}` : defaultAvatar}
+                          src={room.user?.profile_pic ? getImageUrl(room.user?.profile_pic) : defaultAvatar}
                           alt="User"
-                          className="w-10 h-10 rounded-full object-cover border border-gray-200"
+                          className="w-10 h-10 rounded-full object-cover border border-gray-500"
                           onError={(e) => {
                             e.target.src = defaultAvatar;
                           }}
@@ -420,9 +421,9 @@ const AdminChatDashboard = () => {
               <div className="px-4 py-2 bg-white border-b border-gray-200 flex items-center justify-between gap-3">
                 <div className="flex items-center gap-3">
                   <img
-                    src={selectedRoom.user?.profile_pic ? `${BASE_URL}${selectedRoom.user?.profile_pic}` : defaultAvatar}
+                    src={selectedRoom.user?.profile_pic ? getImageUrl(selectedRoom.user?.profile_pic) : defaultAvatar}
                     alt="User"
-                    className="w-8 h-8 rounded-full object-cover border border-gray-200"
+                    className="w-8 h-8 rounded-full object-cover border border-gray-500"
                     onError={(e) => {
                       e.target.src = defaultAvatar;
                     }}
@@ -448,6 +449,7 @@ const AdminChatDashboard = () => {
                   </button>
                 </div>
               </div>
+
               {/* Messages List */}
               <div className="flex-1 p-4 overflow-y-auto flex flex-col gap-3 relative" onClick={() => setShowEmoji(false)}>
                 {messages.map((msg, idx) => {
@@ -472,12 +474,7 @@ const AdminChatDashboard = () => {
 
                           <div className="flex gap-3 mb-3">
                             <div className="w-16 h-16 bg-gray-100 rounded-md overflow-hidden shrink-0">
-                              <img
-                                src={`${BASE_URL}${productData.image}`}
-                                className="w-full h-full object-cover"
-                                alt="Product"
-                                onError={(e) => (e.target.src = 'https://via.assets.so/img.jpg?w=100&h=100&bg=fce7f3&f=png')} // Fallback image
-                              />
+                              <img src={getImageUrl(productData.image)} className="w-full h-full object-cover" alt="Product" onError={(e) => (e.target.src = 'https://via.assets.so/img.jpg?w=100&h=100&bg=fce7f3&f=png')} />
                             </div>
                             <div className="flex-1 min-w-0">
                               <h4 className="font-bold text-sm text-gray-800 line-clamp-2 leading-tight mb-1">{productData.name}</h4>
@@ -502,7 +499,7 @@ const AdminChatDashboard = () => {
                       )}
                       <div className={`max-w-[70%] px-3 py-1 rounded-lg text-sm shadow-sm ${msg.sender_role === 'admin' ? 'bg-blue-600 text-white rounded-br-none' : 'bg-white text-gray-800 border border-gray-200 rounded-bl-none'}`}>
                         {msg.type === 'image' ? (
-                          <img src={getImageUrl(msg.message)} alt="sent" className="rounded-md max-w-full h-auto cursor-pointer border border-white/20" onClick={() => window.open(getImageUrl(msg.message), '_blank')} />
+                          <img src={getImageUrl(msg.message)} alt="sent" className="rounded-md max-w-50 h-auto cursor-pointer border border-white/20" onClick={() => window.open(getImageUrl(msg.message), '_blank')} />
                         ) : (
                           <p>{msg.message}</p>
                         )}
@@ -519,6 +516,7 @@ const AdminChatDashboard = () => {
                   </div>
                 )}
               </div>
+
               {/* Input Area */}
               <form onSubmit={handleSend} className="px-4 py-2 bg-white border-t border-gray-200 flex gap-3 items-center">
                 <button

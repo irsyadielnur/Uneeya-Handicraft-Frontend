@@ -308,7 +308,7 @@ const CustomerServiceChat = () => {
                     <div className="flex gap-3 mb-3">
                       <div className="w-16 h-16 bg-gray-100 rounded-md overflow-hidden shrink-0">
                         {/* Pastikan BASE_URL sesuai environment Anda */}
-                        <img src={`${BASE_URL}${productData.image}`} className="w-full h-full object-cover" alt="Product" onError={(e) => (e.target.src = 'https://via.assets.so/img.jpg?w=100&h=100&bg=fce7f3&f=png')} />
+                        <img src={getImageUrl(productData.image)} className="w-full h-full object-cover" alt="Product" onError={(e) => (e.target.src = 'https://via.assets.so/img.jpg?w=100&h=100&bg=fce7f3&f=png')} />
                       </div>
                       <div className="flex-1 min-w-0">
                         <h4 className="font-bold text-sm text-gray-800 line-clamp-2 leading-tight mb-1">{productData.name}</h4>
@@ -336,7 +336,7 @@ const CustomerServiceChat = () => {
                   className={`max-w-[80%] p-2 rounded-lg group text-sm ${msg.sender_role === 'user' ? 'bg-[#8ecae6] self-end text-black rounded-br-none' : 'bg-white border border-gray-200 self-start text-black rounded-bl-none'}`}
                 >
                   {msg.type === 'image' ? (
-                    <img src={getImageUrl(msg.message)} alt="sent" className="rounded-md max-w-full h-auto cursor-pointer" onClick={() => window.open(getImageUrl(msg.message), '_blank')} />
+                    <img src={getImageUrl(msg.message)} alt="sent" className="rounded-md max-w-50 h-auto cursor-pointer" onClick={() => window.open(getImageUrl(msg.message), '_blank')} />
                   ) : (
                     <p className="wrap-break-words">{msg.message}</p>
                   )}

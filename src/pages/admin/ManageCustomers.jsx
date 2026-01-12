@@ -144,20 +144,21 @@ const ManageCustomers = () => {
       {selectedCustomer && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm">
           <div className="bg-white rounded-lg shadow-xl w-full max-w-2xl max-h-[90vh] overflow-y-auto">
-            <div className="p-6 border-b flex justify-between items-center bg-gray-50">
+            <div className="px-6 py-3 border-b flex justify-between items-center bg-gray-50">
               <h3 className="text-xl font-bold text-gray-800">Detail Pelanggan</h3>
-              <button onClick={() => setSelectedCustomer(null)} className="text-gray-400 hover:text-gray-600">
+              <button onClick={() => setSelectedCustomer(null)} className="text-gray-400 hover:text-gray-600 cursor-pointer active:scale-90">
                 <FaTimes size={20} />
               </button>
             </div>
 
-            <div className="p-6">
+            <div className="px-6 py-3">
               {/* Header Profil */}
               <div className="flex items-center gap-4 mb-8">
                 <img src={getAvatarUrl(selectedCustomer.profile_pic)} alt="" className="w-20 h-20 rounded-full object-cover border-4 border-gray-100 shadow" />
                 <div>
                   <h2 className="text-2xl font-bold text-gray-800">{selectedCustomer.username}</h2>
-                  <p className="text-gray-500">{selectedCustomer.email}</p>
+                  <p className="text-gray-700">{selectedCustomer.email}</p>
+                  <p className="text-sm text-gray-500">{selectedCustomer.phone}</p>
                   <div className="flex gap-2 mt-2">
                     <span className="bg-yellow-100 text-yellow-800 text-xs px-2 py-1 rounded-full font-bold">Customer</span>
                     <span className="bg-green-100 text-green-800 text-xs px-2 py-1 rounded-full font-bold">Total Belanja: Rp {selectedCustomer.total_spent.toLocaleString()}</span>
@@ -200,7 +201,7 @@ const ManageCustomers = () => {
             </div>
 
             <div className="p-4 border-t bg-gray-50 text-right">
-              <button onClick={() => setSelectedCustomer(null)} className="px-6 py-2 bg-white border border-gray-300 rounded text-gray-700 hover:bg-gray-100">
+              <button onClick={() => setSelectedCustomer(null)} className="px-6 py-2 bg-white border border-gray-300 rounded text-gray-700 hover:bg-gray-10 cursor-pointer active:scale-90">
                 Tutup
               </button>
             </div>

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import AdminLayout from '../../components/layouts/AdminLayout';
+import { getImageUrl } from '../../utils/imageHelper';
 import api from '../../config/api';
 import { FaStar, FaArrowLeft } from 'react-icons/fa';
 
@@ -70,7 +71,7 @@ const AdminProductDetail = () => {
         <div className="lg:col-span-2 bg-cream p-6 rounded-lg shadow">
           <div className="flex gap-4 mb-6 overflow-x-auto pb-2">
             {product.ProductImages?.map((img, idx) => (
-              <img key={idx} src={`${BASE_URL}${img.image_url}`} alt="Produk" className="w-32 h-32 object-cover rounded border" />
+              <img key={idx} src={getImageUrl(img.image_url)} alt="Produk" className="w-32 h-32 object-cover rounded border" />
             ))}
           </div>
 

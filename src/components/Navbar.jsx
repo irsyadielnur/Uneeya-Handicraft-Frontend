@@ -111,7 +111,7 @@ const Navbar = () => {
 
                 <Menu as="div" className="relative inline-block">
                   <MenuButton className="btn-icon">
-                    <img src={getAvatarUrl(user?.profile_pic)} alt="profile" className="w-7 h-7 rounded-full object-cover border border-gray-200" />
+                    <img src={getAvatarUrl(user?.profile_pic)} alt="profile" className="w-7 h-7 rounded-full object-cover border border-gray-500" />
                   </MenuButton>
 
                   <MenuItems

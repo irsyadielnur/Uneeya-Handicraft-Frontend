@@ -1,17 +1,16 @@
 import React, { useEffect, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import api from '../config/api';
 import toast from 'react-hot-toast';
 import { FaBoxOpen, FaTruck, FaFileInvoice, FaStar, FaMapMarkerAlt } from 'react-icons/fa';
 import ReviewModal from '../components/ReviewModal';
 import Swal from 'sweetalert2';
+import { getImageUrl } from '../utils/imageHelper';
 
 const History = () => {
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
   const [activeTab, setActiveTab] = useState('all');
-  const navigate = useNavigate();
-  const BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
   const [isReviewOpen, setIsReviewOpen] = useState(false);
   const [selectedProductToReview, setSelectedProductToReview] = useState(null);
@@ -51,14 +50,6 @@ const History = () => {
     } catch (e) {
       return 'Alamat tidak tersedia';
     }
-  };
-
-  // Helper Get Image
-  const getProductImage = (item) => {
-    if (item.Product?.ProductImages?.length > 0) {
-      return `${BASE_URL}${item.Product.ProductImages[0].image_url}`;
-    }
-    return 'https://via.assets.so/img.jpg?w=300&h=300&bg=fce7f3&f=png';
   };
 
   //   Handle Bayar Ulang
@@ -201,7 +192,14 @@ const History = () => {
                   <div key={idx} className="flex gap-3 md:gap-4 py-3 md:py-4 first:pt-0 last:pb-0">
                     {/* Image */}
                     <div className="w-16 h-16 md:w-20 md:h-20 bg-gray-100 rounded-lg overflow-hidden border border-gray-200 shrink-0">
-                      <img src={getProductImage(item)} alt={item.product_name} className="w-full h-full object-cover" />
+                      <img
+                        src={getImageUrl(item.Product.ProductImages[0].image_url)}
+                        alt={item.product_name}
+                        className="w-full h-full object-cover"
+                        onError={(e) => {
+                          e.target.src = 'https://via.assets.so/img.jpg?w=300&h=300&bg=fce7f3&f=png';
+                        }}
+                      />
                     </div>
 
                     {/* Details */}

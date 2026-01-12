@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import AdminLayout from '../../components/layouts/AdminLayout';
+import { getImageUrl } from '../../utils/imageHelper';
 import api from '../../config/api';
 import toast from 'react-hot-toast';
 import { FaUpload, FaTrash, FaPlus, FaArrowLeft } from 'react-icons/fa';
@@ -9,7 +10,6 @@ const ProductForm = () => {
   const { id } = useParams(); // Jika ada ID, berarti mode Edit
   const navigate = useNavigate();
   const isEditMode = !!id;
-  const BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
@@ -287,7 +287,7 @@ const ProductForm = () => {
               <div className="flex gap-4 overflow-x-auto pb-2">
                 {existingImages.map((img, idx) => (
                   <div key={idx} className="relative shrink-0 group mt-2">
-                    <img src={`${BASE_URL}${img.url}`} alt="Existing" className="w-24 h-24 object-cover rounded border" />
+                    <img src={getImageUrl(img.url)} alt="Existing" className="w-24 h-24 object-cover rounded border" />
                     {/* Tombol Hapus Gambar Lama */}
                     <button
                       type="button"
@@ -314,11 +314,11 @@ const ProductForm = () => {
           {previewImages.length > 0 && (
             <div className="mt-4">
               <p className="text-xs text-gray-500 mb-2">Foto Baru (Akan diupload):</p>
-              <div className="flex gap-4 overflow-x-auto pb-2">
+              <div className="flex gap-4 overflow-x-auto pb-2 pt-3">
                 {previewImages.map((src, idx) => (
                   <div key={idx} className="relative shrink-0">
                     <img src={src} alt="Preview" className="w-24 h-24 object-cover rounded border" />
-                    <button type="button" onClick={() => removeNewImage(idx)} className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full p-1 text-xs shadow hover:bg-red-600">
+                    <button type="button" onClick={() => removeNewImage(idx)} className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full p-1 text-xs shadow hover:bg-red-600 cursor-pointer active:scale-90">
                       <FaTrash size={10} />
                     </button>
                   </div>
