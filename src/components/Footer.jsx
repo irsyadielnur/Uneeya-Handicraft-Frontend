@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { FaInstagram, FaWhatsapp, FaTiktok, FaEnvelope, FaMapMarkerAlt, FaPhone } from 'react-icons/fa';
 import api from '../config/api';
 import uneeyaLogo from '../assets/icons/uneeya.png';
+import { getImageUrl } from '../utils/imageHelper';
 
 const Footer = () => {
   const [shop, setShop] = useState(null);
@@ -19,14 +20,6 @@ const Footer = () => {
     fetchShopInfo();
   }, []);
 
-  const BASE_URL = import.meta.env.VITE_API_BASE_URL;
-  const getLogoUrl = () => {
-    if (shop?.logo_url) {
-      return `${BASE_URL}${shop.logo_url}`;
-    }
-    return uneeyaLogo;
-  };
-
   const waLink = shop?.whatsapp_number ? `https://wa.me/${shop.whatsapp_number}` : '#';
   const igLink = shop?.instagram_username ? `https://instagram.com/${shop.instagram_username}` : '#';
   const tiktokLink = shop?.tiktok_username ? `https://tiktok.com/@${shop.tiktok_username}` : '#';
@@ -38,7 +31,14 @@ const Footer = () => {
           {/* Kolom 1: Brand Info */}
           <div className="space-y-4 text-center md:text-left">
             <div className="flex items-center justify-center md:justify-start gap-2">
-              <img src={getLogoUrl()} alt="Shop Logo" className="w-8 h-8" />
+              <img
+                src={getImageUrl(shop?.logo_url)}
+                alt="Shop Logo"
+                className="w-8 h-8"
+                onError={(e) => {
+                  e.target.src = { uneeyaLogo };
+                }}
+              />
               <h2 className="text-xl font-bold text-gray-900">{shop?.shop_name}</h2>
             </div>
             <p className="text-gray-600 text-sm leading-relaxed">Menghadirkan kehangatan kerajinan tangan berkualitas tinggi. Setiap produk dibuat dengan cinta dan ketelitian untuk Anda yang istimewa.</p>

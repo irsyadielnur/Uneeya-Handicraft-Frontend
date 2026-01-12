@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import AdminLayout from '../../components/layouts/AdminLayout';
+import { getImageUrl } from '../../utils/imageHelper';
 import api from '../../config/api';
 import toast from 'react-hot-toast';
 import Swal from 'sweetalert2';
@@ -10,7 +11,6 @@ const ManageProducts = () => {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
-  const BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
   const fetchProducts = async () => {
     try {
@@ -145,9 +145,12 @@ const ManageProducts = () => {
                     <tr key={product.product_id} className={`hover:bg-gray-50 transition-colors ${isOutOfStock ? 'bg-red-50' : ''}`}>
                       <td className="px-6 py-2 flex items-center gap-3 max-w-lg">
                         <img
-                          src={product.ProductImages?.[0]?.image_url ? `${BASE_URL}${product.ProductImages[0].image_url}` : 'https://via.assets.so/img.jpg?w=100&h=100&bg=fce7f3&f=png'}
+                          src={getImageUrl(product.ProductImages?.[0]?.image_url)}
                           alt={product.name}
                           className={`w-12 h-12 object-cover rounded border border-gray-200 ${isOutOfStock ? 'grayscale opacity-60' : ''}`}
+                          onError={(e) => {
+                            e.target.src = 'https://via.assets.so/img.jpg?w=100&h=100&bg=fce7f3&f=png';
+                          }}
                         />
                         <div className="flex flex-col">
                           <p className={`font-md font-semibold text-gray-800 line-clamp-1 ${isOutOfStock ? 'text-gray-500' : 'text-gray-800'}`}>{product.name}</p>

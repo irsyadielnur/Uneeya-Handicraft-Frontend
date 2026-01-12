@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
+import { getImageUrl } from '../../utils/imageHelper';
 import AdminLayout from '../../components/layouts/AdminLayout';
 import api from '../../config/api';
 import toast from 'react-hot-toast';
@@ -11,7 +12,6 @@ const EditReport = () => {
   const [notes, setNotes] = useState('');
   const [file, setFile] = useState(null);
   const [loading, setLoading] = useState(false);
-  const BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
   useEffect(() => {
     const fetchReport = async () => {
@@ -83,7 +83,14 @@ const EditReport = () => {
             {/* Tampilkan Bukti Lama jika ada */}
             {report.proof_image && !file && (
               <div className="mb-2 flex items-center gap-4 bg-blue-50 p-2 rounded border border-blue-100">
-                <img src={`${BASE_URL}${report.proof_image}`} alt="Bukti Lama" className="w-16 h-16 object-contain bg-white rounded border" />
+                <img
+                  src={getImageUrl(report.proof_image)}
+                  alt="Bukti Lama"
+                  className="w-16 h-16 object-contain bg-white rounded border"
+                  onError={(e) => {
+                    e.target.src = 'https://via.assets.so/img.jpg?w=100&h=100&bg=fce7f3&f=png';
+                  }}
+                />
                 <span className="text-xs text-blue-600">File saat ini tersimpan. Upload baru untuk mengganti.</span>
               </div>
             )}

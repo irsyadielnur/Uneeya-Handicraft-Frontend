@@ -2,13 +2,13 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import api from '../../config/api';
 import AdminLayout from '../../components/layouts/AdminLayout';
+import { getImageUrl } from '../../utils/imageHelper';
 import { FaMoneyBillWave, FaShoppingBag, FaUsers, FaBoxOpen, FaChartLine, FaClock, FaExclamationCircle, FaTimesCircle } from 'react-icons/fa';
 import { XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, AreaChart, Area } from 'recharts';
 
 const AdminDashboard = () => {
   const [stats, setStats] = useState(null);
   const [loading, setLoading] = useState(true);
-  const BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
   useEffect(() => {
     const fetchStats = async () => {
@@ -200,9 +200,12 @@ const AdminDashboard = () => {
                 stats?.outOfStockProducts?.map((item, idx) => (
                   <div key={idx} className="flex items-center gap-3 border-b border-gray-50 last:border-0 pb-2 last:pb-0">
                     <img
-                      src={item.Product?.ProductImages?.[0]?.image_url ? `${BASE_URL}${item.Product.ProductImages[0].image_url}` : 'https://via.placeholder.com/150'}
+                      src={getImageUrl(product.ProductImages?.[0]?.image_url)}
                       className="w-10 h-10 rounded-md object-cover bg-gray-200 border border-gray-200"
                       alt={item.Product?.name}
+                      onError={(e) => {
+                        e.target.src = 'https://via.assets.so/img.jpg?w=100&h=100&bg=fce7f3&f=png';
+                      }}
                     />
                     <div className="flex-1 overflow-hidden">
                       <p className="text-sm font-bold text-gray-800 truncate">{item.Product?.name}</p>
