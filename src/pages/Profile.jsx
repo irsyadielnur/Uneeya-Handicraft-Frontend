@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { logout, loginSuccess } from '../redux/slices/authSlice';
 import { fetchProvinces, fetchCities, clearCities } from '../redux/slices/rajaOngkirSlice';
+import { getImageUrl } from '../utils/imageHelper';
 
 import api from '../config/api';
 import toast from 'react-hot-toast';
@@ -39,18 +40,6 @@ const Profile = () => {
     email: '',
     phone: '',
   });
-
-  const getAvatarUrl = (path) => {
-    // console.log('Path dari DB:', path);
-    // console.log('Base URL:', BASE_URL);
-
-    if (!path) return 'https://via.assets.so/img.jpg?w=100&h=100&bg=e5e7eb&f=png';
-    if (path.startsWith('http')) return path;
-
-    const safePath = path.replace(/\\/g, '/');
-    const cleanPath = safePath.startsWith('/') ? safePath.substring(1) : safePath;
-    return `${BASE_URL}/${cleanPath}`;
-  };
 
   const [avatarPreview, setAvatarPreview] = useState('');
   const [avatarFile, setAvatarFile] = useState(null);
@@ -297,7 +286,7 @@ const Profile = () => {
           <div className="bg-cream-2 p-6 rounded-xl border border-gray-200 text-center shadow-sm">
             <div className="relative w-32 h-32 mx-auto mb-4 group">
               <img
-                src={avatarPreview || getAvatarUrl(user?.profile_pic)}
+                src={avatarPreview || getImageUrl(user.profile_pic) || 'https://via.assets.so/img.jpg?w=100&h=100&bg=e5e7eb&f=png'}
                 alt="Profile"
                 className="w-full h-full object-cover rounded-full border-2 border-yellow-400"
                 onError={(e) => {

@@ -4,6 +4,7 @@ import { io } from 'socket.io-client';
 import api from '../../config/api';
 import axios from 'axios';
 import AdminLayout from '../../components/layouts/AdminLayout';
+import { getImageUrl } from '../utils/imageHelper';
 
 import { FaUserCircle, FaPaperPlane, FaSearch, FaSmile, FaImage, FaPlusCircle, FaTimes, FaTrash, FaEllipsisV } from 'react-icons/fa';
 import toast from 'react-hot-toast';
@@ -342,12 +343,6 @@ const AdminChatDashboard = () => {
     });
   };
 
-  const getImageUrl = (url) => {
-    if (!url) return '';
-    if (url.startsWith('http')) return url;
-    return `${BASE_URL}${url}`;
-  };
-
   const filteredRooms = rooms.filter((room) => room.user?.username.toLowerCase().includes(searchTerm.toLowerCase()));
   const isSelectedUserOnline = selectedRoom && onlineUserIds.includes(String(selectedRoom.user?.user_id));
 
@@ -507,7 +502,7 @@ const AdminChatDashboard = () => {
                       )}
                       <div className={`max-w-[70%] px-3 py-1 rounded-lg text-sm shadow-sm ${msg.sender_role === 'admin' ? 'bg-blue-600 text-white rounded-br-none' : 'bg-white text-gray-800 border border-gray-200 rounded-bl-none'}`}>
                         {msg.type === 'image' ? (
-                          <img src={getImageUrl(msg.message)} alt="sent" className="rounded-md max-w-full h-auto cursor-pointer border border-white/20" onClick={() => window.open(`${BASE_URL}${msg.message}`, '_blank')} />
+                          <img src={getImageUrl(msg.message)} alt="sent" className="rounded-md max-w-full h-auto cursor-pointer border border-white/20" onClick={() => window.open(getImageUrl(msg.message), '_blank')} />
                         ) : (
                           <p>{msg.message}</p>
                         )}

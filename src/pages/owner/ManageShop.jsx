@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchProvinces, fetchCities, clearCities } from '../../redux/slices/rajaOngkirSlice';
+import { getImageUrl } from '../utils/imageHelper';
 import AdminLayout from '../../components/layouts/AdminLayout';
 import api from '../../config/api';
 import toast from 'react-hot-toast';
@@ -168,7 +169,7 @@ const ManageShop = () => {
               <label className="block text-sm font-semibold mb-1">Logo Toko</label>
               <div className="flex items-center gap-4">
                 {logoPreview ? (
-                  <img src={logoPreview} alt="Logo" className="w-20 h-20 object-contain border rounded bg-gray-50" />
+                  <img src={logoPreview || getImageUrl(formData.logo_url)} alt="Logo" className="w-20 h-20 object-contain border rounded bg-gray-50" />
                 ) : (
                   <div className="w-20 h-20 bg-gray-100 flex items-center justify-center text-gray-400 rounded border">
                     <FaImage />

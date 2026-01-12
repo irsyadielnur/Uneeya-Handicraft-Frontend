@@ -5,6 +5,7 @@ import api from '../../config/api';
 import axios from 'axios';
 import { FaHeadset, FaPaperPlane, FaSmile, FaImage, FaTrash, FaEllipsisV } from 'react-icons/fa';
 import { FaRegCircleXmark } from 'react-icons/fa6';
+import { getImageUrl } from '../../utils/imageHelper';
 import EmojiPicker from 'emoji-picker-react';
 import toast from 'react-hot-toast';
 import Swal from 'sweetalert2';
@@ -233,12 +234,6 @@ const CustomerServiceChat = () => {
         }
       }
     });
-  };
-
-  const getImageUrl = (url) => {
-    if (!url) return '';
-    if (url.startsWith('http')) return url;
-    return `${BASE_URL}${url}`;
   };
 
   if (!token) return null;

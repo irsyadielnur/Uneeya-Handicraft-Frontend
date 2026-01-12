@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import { getImageUrl } from '../utils/imageHelper';
 import AdminLayout from '../../components/layouts/AdminLayout';
 import api from '../../config/api';
 import toast from 'react-hot-toast';
@@ -71,13 +72,6 @@ const ReportDetail = () => {
   };
 
   const products = getProductSummary();
-
-  // HELPER: Get Image URL
-  const getProofImage = (path) => {
-    if (!path) return null;
-    if (path.startsWith('http')) return path;
-    return `${BASE_URL}${path}`;
-  };
 
   return (
     <AdminLayout>
@@ -217,7 +211,7 @@ const ReportDetail = () => {
             {report.proof_image ? (
               <div className="w-full text-center group relative">
                 <img
-                  src={report.proof_image.startsWith('http') ? report.proof_image : `${BASE_URL}${report.proof_image}`}
+                  src={getImageUrl(report.proof_image)}
                   alt="Bukti Transfer"
                   className="h-48 mx-auto object-contain rounded shadow-sm bg-white cursor-pointer hover:opacity-90 transition"
                   onClick={() => window.open(report.proof_image.startsWith('http') ? report.proof_image : `${BASE_URL}${report.proof_image}`, '_blank')}
