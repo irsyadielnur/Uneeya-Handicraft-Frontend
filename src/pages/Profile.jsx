@@ -72,7 +72,7 @@ const Profile = () => {
         email: user.email || '',
         phone: user.phone || '',
       });
-      setAvatarPreview(getAvatarUrl(user.profile_pic));
+      setAvatarPreview(getImageUrl(user.profile_pic));
     }
   }, [user, BASE_URL]);
 
@@ -124,7 +124,7 @@ const Profile = () => {
     } catch (error) {
       console.error(error);
       toast.error(error.response?.data?.message || 'Gagal update profil');
-      if (user) setAvatarPreview(getAvatarUrl(user.profile_pic));
+      if (user) setAvatarPreview(getImageUrl(user.profile_pic));
     }
   };
 
