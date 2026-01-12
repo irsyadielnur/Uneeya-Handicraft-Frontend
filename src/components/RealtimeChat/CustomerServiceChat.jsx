@@ -235,6 +235,12 @@ const CustomerServiceChat = () => {
     });
   };
 
+  const getImageUrl = (url) => {
+    if (!url) return '';
+    if (url.startsWith('http')) return url;
+    return `${BASE_URL}${url}`;
+  };
+
   if (!token) return null;
   return (
     <>
@@ -335,7 +341,7 @@ const CustomerServiceChat = () => {
                   className={`max-w-[80%] p-2 rounded-lg group text-sm ${msg.sender_role === 'user' ? 'bg-[#8ecae6] self-end text-black rounded-br-none' : 'bg-white border border-gray-200 self-start text-black rounded-bl-none'}`}
                 >
                   {msg.type === 'image' ? (
-                    <img src={`${BASE_URL}${msg.message}`} alt="sent" className="rounded-md max-w-full h-auto cursor-pointer" onClick={() => window.open(`${BASE_URL}${msg.message}`, '_blank')} />
+                    <img src={getImageUrl(msg.message)} alt="sent" className="rounded-md max-w-full h-auto cursor-pointer" onClick={() => window.open(getImageUrl(msg.message), '_blank')} />
                   ) : (
                     <p className="wrap-break-words">{msg.message}</p>
                   )}

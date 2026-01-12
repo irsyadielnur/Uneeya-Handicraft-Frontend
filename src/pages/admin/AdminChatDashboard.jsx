@@ -501,7 +501,12 @@ const AdminChatDashboard = () => {
                       )}
                       <div className={`max-w-[70%] px-3 py-1 rounded-lg text-sm shadow-sm ${msg.sender_role === 'admin' ? 'bg-blue-600 text-white rounded-br-none' : 'bg-white text-gray-800 border border-gray-200 rounded-bl-none'}`}>
                         {msg.type === 'image' ? (
-                          <img src={`${BASE_URL}${msg.message}`} alt="sent" className="rounded-md max-w-full h-auto cursor-pointer border border-white/20" onClick={() => window.open(`${BASE_URL}${msg.message}`, '_blank')} />
+                          <img
+                            src={msg.message.startsWith('http') ? msg.message : `${BASE_URL}${msg.message}`}
+                            alt="sent"
+                            className="rounded-md max-w-full h-auto cursor-pointer border border-white/20"
+                            onClick={() => window.open(`${BASE_URL}${msg.message}`, '_blank')}
+                          />
                         ) : (
                           <p>{msg.message}</p>
                         )}
