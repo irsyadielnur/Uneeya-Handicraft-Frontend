@@ -3,26 +3,19 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { toggleFavorite } from '../redux/slices/favoriteSlice';
 import { FaStar, FaHeart, FaRegHeart } from 'react-icons/fa';
+import { getImageUrl } from '../utils/imageHelper';
 import toast from 'react-hot-toast';
 import bagBtn from '../assets/icons/bag.png';
 
 const ProductCard = ({ product, label, labelColor }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
   const { items: favorites } = useSelector((state) => state.favorites);
   const isFavorite = favorites.some((fav) => fav.product_id === product.product_id);
 
   const totalStock = product.ProductColors?.reduce((sum, item) => sum + item.stock, 0) || 0;
   const isOutOfStock = totalStock <= 0;
-
-  const getImageUrl = (item) => {
-    if (item.ProductImages && item.ProductImages.length > 0) {
-      return `${BASE_URL}${item.ProductImages[0].image_url}`;
-    }
-    return 'https://via.assets.so/img.jpg?w=300&h=300&bg=fce7f3&f=png';
-  };
 
   const formatRupiah = (number) => {
     return new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0 }).format(number);
@@ -53,7 +46,7 @@ const ProductCard = ({ product, label, labelColor }) => {
       <div className="relative aspect-square overflow-hidden rounded-t-xl md:rounded-t-2xl bg-gray-100 border-b border-gray-400 active:scale-95 transition-transform">
         <Link to={`/product/${product.product_id}`}>
           <img
-            src={getImageUrl(product)}
+            src={getImageUrl(product.ProductImages?.[0]?.image_url)}
             alt={product.name}
             className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
             onError={(e) => {

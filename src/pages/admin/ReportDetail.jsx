@@ -16,8 +16,6 @@ const ReportDetail = () => {
   const { user } = useSelector((state) => state.auth);
   const isOwner = user?.role_id === 4;
 
-  const BASE_URL = import.meta.env.VITE_API_BASE_URL;
-
   useEffect(() => {
     const fetchDetail = async () => {
       try {
@@ -214,7 +212,7 @@ const ReportDetail = () => {
                   src={getImageUrl(report.proof_image)}
                   alt="Bukti Transfer"
                   className="h-48 mx-auto object-contain rounded shadow-sm bg-white cursor-pointer hover:opacity-90 transition"
-                  onClick={() => window.open(report.proof_image.startsWith('http') ? report.proof_image : `${BASE_URL}${report.proof_image}`, '_blank')}
+                  onClick={() => window.open(getImageUrl(report.proof_image), '_blank')}
                 />
                 <p className="text-xs text-blue-500 mt-2 print:hidden">Klik gambar untuk memperbesar</p>
               </div>
