@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import { getImageUrl } from '../utils/imageHelper';
+import { getImageUrl } from '../../utils/imageHelper';
 import AdminLayout from '../../components/layouts/AdminLayout';
 import api from '../../config/api';
 import toast from 'react-hot-toast';

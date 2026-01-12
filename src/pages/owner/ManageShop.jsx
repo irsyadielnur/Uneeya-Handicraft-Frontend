@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchProvinces, fetchCities, clearCities } from '../../redux/slices/rajaOngkirSlice';
-import { getImageUrl } from '../utils/imageHelper';
+import { getImageUrl } from '../../utils/imageHelper';
 import AdminLayout from '../../components/layouts/AdminLayout';
 import api from '../../config/api';
 import toast from 'react-hot-toast';

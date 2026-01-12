@@ -4,7 +4,7 @@ import { io } from 'socket.io-client';
 import api from '../../config/api';
 import axios from 'axios';
 import AdminLayout from '../../components/layouts/AdminLayout';
-import { getImageUrl } from '../utils/imageHelper';
+import { getImageUrl } from '../../utils/imageHelper';
 
 import { FaUserCircle, FaPaperPlane, FaSearch, FaSmile, FaImage, FaPlusCircle, FaTimes, FaTrash, FaEllipsisV } from 'react-icons/fa';
 import toast from 'react-hot-toast';
