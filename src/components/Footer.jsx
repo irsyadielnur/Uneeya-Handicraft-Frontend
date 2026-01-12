@@ -121,7 +121,7 @@ const Footer = () => {
             <ul className="space-y-4 text-sm text-gray-600">
               <li className="flex items-start gap-3">
                 <FaMapMarkerAlt className=" text-yellow-600 mt-1text-yellow-600 mt-1 shrink-0" />
-                <span>{shop?.full_address ? `${shop.full_address}, ${shop.city_name || ''}, ${shop.province_name || ''}` : 'Alamat belum diatur'}</span>
+                <span className="text-left">{shop?.full_address ? `${shop.full_address}, ${shop.city_name || ''}, ${shop.province_name || ''}` : 'Alamat belum diatur'}</span>
               </li>
               <li className="flex items-center gap-3">
                 <FaPhone className="text-yellow-600 shrink-0" />
