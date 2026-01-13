@@ -194,7 +194,7 @@ const ProductDetail = () => {
 
               <div className="text-lg md:text-2xl font-bold text-primary mb-3">{formatRupiah(product.price)}</div>
 
-              <p className="text-sm md:text-base text-gray-600 leading-relaxed mb-8">{product.description}</p>
+              <p className="text-sm md:text-base text-gray-600 leading-relaxed mb-8 whitespace-pre-wrap">{product.description}</p>
               <div className="mb-3">
                 <p className="text-xs md:text-sm font-medium text-gray-500">
                   Dimensi:{' '}
