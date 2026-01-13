@@ -46,7 +46,7 @@ const MyRecommendations = () => {
           </div>
           <div>
             <h2 className="text-lg md:text-2xl font-semibold md:font-bold text-gray-800">Dipilih Khusus Untukmu, {user?.username || 'Kak'}!</h2>
-            <p className="text-gray-500 text-xs md:text-sm">Berdasarkan produk yang kamu sukai dan lihat sebelumnya.</p>
+            <p className="text-gray-500 text-xs md:text-sm">Berdasarkan produk yang kamu sukai, masukkan ke keranjang, dan pesan sebelumnya.</p>
           </div>
         </div>
 
