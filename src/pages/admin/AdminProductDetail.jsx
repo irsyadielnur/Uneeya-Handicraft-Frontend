@@ -97,7 +97,7 @@ const AdminProductDetail = () => {
           </div>
           <div className="mt-6">
             <p className="font-semibold text-gray-500 mb-2">Deskripsi</p>
-            <p className="text-gray-600 leading-relaxed bg-gray-50 p-4 rounded">{product.description}</p>
+            <p className="text-gray-600 leading-relaxed bg-gray-50 p-4 rounded whitespace-pre-wrap">{product.description}</p>
           </div>
         </div>
 
