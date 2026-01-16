@@ -3,6 +3,7 @@ import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import ReactMarkdown from 'react-markdown';
 import axios from 'axios';
+import { getImageUrl } from '../../utils/imageHelper';
 
 import Swal from 'sweetalert2';
 import sendIcon from '../../assets/icons/right.png';
@@ -241,7 +242,7 @@ const Chatbot = () => {
                       {/* 1. GAMBAR PRODUK */}
                       <div className="w-20 h-20 shrink-0 rounded-lg overflow-hidden bg-gray-100 border border-gray-100">
                         <img
-                          src={prod.image ? `${BASE_URL}${prod.image}` : 'https://via.assets.so/img.jpg?w=100&h=100&bg=fce7f3&f=png'}
+                          src={getImageUrl(prod.image)}
                           alt={prod.name}
                           className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
                           onError={(e) => {
