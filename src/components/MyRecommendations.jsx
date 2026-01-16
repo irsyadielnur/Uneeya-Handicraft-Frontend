@@ -54,7 +54,7 @@ const MyRecommendations = () => {
           <div className="text-center py-10">Sedang meracik rekomendasi...</div>
         ) : (
           <div className="flex gap-4 overflow-x-auto pb-4 snap-x snap-mandatory scroll-smooth md:grid sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 md:gap-4 md:overflow-visible md:pb-0">
-            {recommendations.slice(0, 5).map((item, index) => {
+            {recommendations.slice(0, 10).map((item, index) => {
               const productData = item.product ? item.product : item;
               if (!productData || !productData.product_id) return null;
               return (
