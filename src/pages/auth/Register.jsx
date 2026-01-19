@@ -115,7 +115,7 @@ const Register = () => {
           <button
             type="submit"
             disabled={isLoading || !isFormValid}
-            className={`w-full py-3 rounded-lg font-bold shadow-md transition-all duration-200 ${
+            className={`w-full py-2 rounded-lg font-bold shadow-md transition-all duration-200 cursor-pointer active:scale-95 ${
               isLoading || !isFormValid ? 'bg-gray-300 text-gray-500 cursor-not-allowed' : 'bg-yellow-500 text-white hover:bg-yellow-600 hover:shadow-lg transform active:scale-95'
             }`}
           >

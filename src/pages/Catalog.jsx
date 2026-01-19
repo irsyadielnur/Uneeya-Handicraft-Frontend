@@ -198,7 +198,7 @@ const Catalog = () => {
         </div>
 
         {/* Rekomendasi Produk */}
-        <div className="mb-8">
+        <div className="mb-6">
           <MyRecommendations />
         </div>
       </div>

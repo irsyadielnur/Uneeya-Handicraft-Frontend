@@ -5,6 +5,8 @@ import ProductCard from '../components/ProductCard';
 import { Link } from 'react-router-dom';
 import { FaHeartBroken } from 'react-icons/fa';
 
+import MyRecommendations from '../components/MyRecommendations';
+
 const Favorite = () => {
   const dispatch = useDispatch();
   const { items, status } = useSelector((state) => state.favorites);
@@ -19,7 +21,13 @@ const Favorite = () => {
 
   return (
     <div className="pt-6 pb-12 px-4 md:px-12 mt-5 md:mt-0">
-      <h1 className="text-xl md:text-3xl font-bold text-gray-900 mb-4 md:mb-8 border-b-2 border-gray-500 inline-block pb-1 md:pb-4 w-full text-center md:text-left">Produk Favorit Saya</h1>
+      <div className="mb-4 md:mb-8 border-b-2 border-gray-500 pb-1 md:pb-4">
+        <Link to="/products" className="text-gray-600 hover:text-black font-semibold flex items-center gap-2">
+          ← Lanjut Belanja
+        </Link>
+
+        <h1 className="text-xl text-center md:text-3xl font-bold text-gray-900">Produk Favorite</h1>
+      </div>
 
       {items.length === 0 ? (
         <div className="text-center py-20 bg-white rounded-xl border border-dashed border-gray-300">
@@ -36,6 +44,11 @@ const Favorite = () => {
           ))}
         </div>
       )}
+
+      {/* Rekomendasi Produk */}
+      <div className="mb-6">
+        <MyRecommendations />
+      </div>
     </div>
   );
 };

@@ -73,11 +73,6 @@ const Footer = () => {
                   Tentang Kami
                 </Link>
               </li>
-              <li>
-                <Link to="/check-shipping" className="hover:text-yellow-600 transition-colors">
-                  Cek Ongkir
-                </Link>
-              </li>
             </ul>
           </div>
 
@@ -99,11 +94,6 @@ const Footer = () => {
                 <Link to="/favorite" className="hover:text-yellow-600 transition-colors">
                   Favorit Saya
                 </Link>
-              </li>
-              <li>
-                <a href="#" className="hover:text-yellow-600 transition-colors">
-                  FAQ / Tanya Jawab
-                </a>
               </li>
             </ul>
           </div>

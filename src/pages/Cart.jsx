@@ -76,10 +76,16 @@ const Cart = () => {
   }
 
   return (
-    <div className="min-h-screen bg-cream pt-6 pb-10 px-4 md:px-12 mt-5 md:mt-0">
-      <h1 className="text-xl text-center md:text-left md:text-3xl font-bold text-gray-900 mb-4 md:mb-8 w-full border-b-2 border-gray-500 inline-block pb-1 md:pb-4">Keranjang Belanja Mu</h1>
+    <div className="bg-cream pt-6 pb-10 px-4 md:px-12 mt-5 md:mt-0">
+      <div className="mb-4 md:mb-8 border-b-2 border-gray-500 pb-1 md:pb-4">
+        <Link to="/products" className="text-gray-600 hover:text-black font-semibold flex items-center gap-2">
+          ← Lanjut Belanja
+        </Link>
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">
+        <h1 className="text-xl text-center md:text-3xl font-bold text-gray-900">Keranjang Belanja Mu</h1>
+      </div>
+
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         {/* --- KOLOM KIRI: LIST PRODUK --- */}
         <div className="lg:col-span-2 space-y-4 md:space-y-6">
           {cartItems.length === 0 ? (
@@ -181,7 +187,10 @@ const Cart = () => {
         </div>
       </div>
 
-      <MyRecommendations />
+      {/* Rekomendasi Produk */}
+      <div className="mb-6">
+        <MyRecommendations />
+      </div>
     </div>
   );
 };
