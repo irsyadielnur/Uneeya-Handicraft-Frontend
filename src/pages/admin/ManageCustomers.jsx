@@ -104,30 +104,30 @@ const ManageCustomers = () => {
               ) : (
                 filteredCustomers.map((cust) => (
                   <tr key={cust.user_id} className="hover:bg-gray-50">
-                    <td className="px-6 py-3">
+                    <td className="px-6 py-2">
                       <div className="flex items-center gap-3">
-                        <img src={getAvatarUrl(cust.profile_pic)} alt={cust.username} className="w-10 h-10 rounded-full object-cover border" />
+                        <img src={getAvatarUrl(cust.profile_pic)} alt={cust.username} className="w-9 h-9 rounded-full object-cover border" />
                         <span className="font-bold text-gray-800">{cust.username}</span>
                       </div>
                     </td>
-                    <td className="px-6 py-3">
+                    <td className="px-6 py-2">
                       <div className="text-sm">
                         <p className="flex items-center gap-2 text-gray-600">
                           <FaEnvelope className="text-xs" /> {cust.email}
                         </p>
-                        {cust.phone_number && (
+                        {cust.phone && (
                           <p className="flex items-center gap-2 text-gray-500 mt-0.5">
-                            <FaPhone className="text-xs" /> {cust.phone_number}
+                            <FaPhone className="text-xs" /> {cust.phone}
                           </p>
                         )}
                       </div>
                     </td>
-                    <td className="px-6 py-3 text-center">
+                    <td className="px-6 py-2 text-center">
                       <span className="bg-gray-100 text-gray-800 px-3 py-1 rounded-full text-sm font-bold">{cust.total_orders}</span>
                     </td>
-                    <td className="px-6 py-3 font-semibold text-green-600">Rp {cust.total_spent.toLocaleString()}</td>
-                    <td className="px-6 py-3 text-sm text-gray-500">{new Date(cust.joined_at).toLocaleDateString('id-ID', { month: 'short', year: 'numeric' })}</td>
-                    <td className="px-6 py-3 text-center">
+                    <td className="px-6 py-2 font-semibold text-green-600">Rp {cust.total_spent.toLocaleString()}</td>
+                    <td className="px-6 py-2 text-sm text-gray-500">{new Date(cust.joined_at).toLocaleDateString('id-ID', { month: 'short', year: 'numeric' })}</td>
+                    <td className="px-6 py-2 text-center">
                       <button onClick={() => setSelectedCustomer(cust)} className="text-blue-600 hover:text-blue-800 bg-blue-50 p-2 rounded hover:bg-blue-100 transition" title="Lihat Detail">
                         <FaHistory />
                       </button>

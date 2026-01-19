@@ -3,7 +3,8 @@ import AdminLayout from '../../components/layouts/AdminLayout';
 import { getImageUrl } from '../../utils/imageHelper';
 import api from '../../config/api';
 import toast from 'react-hot-toast';
-import { FaEye, FaTruck, FaBoxOpen, FaTimes, FaMoneyBillWave, FaSearch } from 'react-icons/fa';
+import Swal from 'sweetalert2';
+import { FaEye, FaTruck, FaBoxOpen, FaTimes, FaMoneyBillWave, FaSearch, FaChevronLeft, FaChevronRight, FaTrash } from 'react-icons/fa';
 
 const ManageOrders = () => {
   const [orders, setOrders] = useState([]);
@@ -11,18 +12,30 @@ const ManageOrders = () => {
   const [filterStatus, setFilterStatus] = useState('all');
   const [searchTerm, setSearchTerm] = useState('');
 
+  const [page, setPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+
   // State Modal
   const [selectedOrder, setSelectedOrder] = useState(null);
   const [isResiModalOpen, setIsResiModalOpen] = useState(false);
   const [trackingNumber, setTrackingNumber] = useState('');
   const [processingId, setProcessingId] = useState(null);
 
+  const BASE_URL = import.meta.env.VITE_API_BASE_URL;
+
   const fetchOrders = async () => {
     setLoading(true);
     try {
-      const query = filterStatus !== 'all' ? `?status=${filterStatus}` : '';
-      const response = await api.get(`/api/orders/admin/all${query}`);
-      setOrders(response.data);
+      const response = await api.get('/api/orders/admin/all', {
+        params: {
+          status: filterStatus === 'all' ? '' : filterStatus,
+          page: page,
+          limit: 10,
+          search: searchTerm,
+        },
+      });
+      setOrders(response.data.orders);
+      setTotalPages(response.data.total_page);
     } catch (error) {
       console.error(error);
       toast.error('Gagal memuat pesanan');
@@ -32,8 +45,16 @@ const ManageOrders = () => {
   };
 
   useEffect(() => {
-    fetchOrders();
+    setPage(1);
   }, [filterStatus]);
+
+  useEffect(() => {
+    const delayDebounceFn = setTimeout(() => {
+      fetchOrders();
+    }, 500);
+
+    return () => clearTimeout(delayDebounceFn);
+  }, [filterStatus, page, searchTerm]);
 
   // --- HANDLER STATUS ---
   const handleProcessOrder = async (orderId) => {
@@ -70,14 +91,28 @@ const ManageOrders = () => {
     }
   };
 
-  // Logika Pencarian
-  const filteredOrders = orders.filter((order) => {
-    const term = searchTerm.toLowerCase();
-    const orderId = String(order.order_id).toLowerCase();
-    const username = order.User?.username?.toLowerCase() || '';
-
-    return orderId.includes(term) || username.includes(term);
-  });
+  const handleDeleteOrder = async (orderId) => {
+    Swal.fire({
+      title: 'Hapus Data Pesanan?',
+      text: 'PERINGATAN: Menghapus pesanan akan menghapus data transaksi terkait secara permanen. Gunakan hanya untuk data sampah.',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#d33',
+      cancelButtonColor: '#3085d6',
+      confirmButtonText: 'Hapus Permanen',
+      cancelButtonText: 'Batal',
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        try {
+          await api.delete(`/api/orders/admin/${orderId}`);
+          toast.success('Pesanan berhasil dihapus');
+          fetchOrders();
+        } catch (error) {
+          toast.error('Gagal menghapus pesanan');
+        }
+      }
+    });
+  };
 
   // --- HELPER UI ---
   const getStatusBadge = (status) => {
@@ -85,9 +120,9 @@ const ManageOrders = () => {
       case 'pending':
         return <span className="px-2 py-1 rounded bg-yellow-100 text-yellow-700 text-xs font-bold">Belum Bayar</span>;
       case 'paid':
-        return <span className="px-2 py-1 rounded bg-blue-100 text-blue-700 text-xs font-bold">Dibayar (Verifikasi)</span>;
+        return <span className="px-2 py-1 rounded bg-blue-100 text-blue-700 text-xs font-bold">Dibayar</span>;
       case 'processing':
-        return <span className="px-2 py-1 rounded bg-indigo-100 text-indigo-700 text-xs font-bold">Sedang Disiapkan</span>;
+        return <span className="px-2 py-1 rounded bg-indigo-100 text-indigo-700 text-xs font-bold">Dikemas</span>;
       case 'shipped':
         return <span className="px-2 py-1 rounded bg-purple-100 text-purple-700 text-xs font-bold">Dikirim</span>;
       case 'completed':
@@ -97,6 +132,13 @@ const ManageOrders = () => {
       default:
         return <span className="bg-gray-100 text-gray-600 px-2 py-1 rounded text-xs">{status}</span>;
     }
+  };
+
+  const getAvatarUrl = (path) => {
+    if (!path) return 'https://via.assets.so/img.jpg?w=100&h=100&bg=e5e7eb&f=png';
+    if (path.startsWith('http')) return path;
+    const cleanPath = path.startsWith('/') ? path.substring(1) : path;
+    return `${BASE_URL}/${cleanPath}`;
   };
 
   return (
@@ -121,9 +163,11 @@ const ManageOrders = () => {
       <div className="flex overflow-x-auto gap-2 mb-6 border-b pb-2">
         {[
           { label: 'Semua', val: 'all' },
+          { label: 'Perlu Dikemas', val: 'paid' },
           { label: 'Sedang Disiapkan', val: 'processing' },
           { label: 'Dalam Pengiriman', val: 'shipped' },
           { label: 'Selesai', val: 'completed' },
+          { label: 'Dibatalkan', val: 'cancelled' },
         ].map((tab) => (
           <button
             key={tab.val}
@@ -141,7 +185,7 @@ const ManageOrders = () => {
       <div className="bg-white rounded-lg shadow overflow-hidden">
         <div className="overflow-x-auto">
           <table className="w-full text-left border-collapse">
-            <thead className="bg-gray-50 text-gray-600 uppercase text-xs font-semibold">
+            <thead className="bg-gray-100 text-gray-600 uppercase text-xs font-semibold">
               <tr>
                 <th className="px-6 py-4">Order ID</th>
                 <th className="px-6 py-4">Pelanggan</th>
@@ -158,24 +202,27 @@ const ManageOrders = () => {
                     Memuat pesanan...
                   </td>
                 </tr>
-              ) : filteredOrders.length === 0 ? (
+              ) : orders.length === 0 ? (
                 <tr>
                   <td colSpan="6" className="text-center py-8 text-gray-400">
                     {orders.length === 0 ? 'Tidak ada pesanan ditemukan.' : 'Pencarian tidak ditemukan.'}
                   </td>
                 </tr>
               ) : (
-                filteredOrders.map((order) => (
+                orders.map((order) => (
                   <tr key={order.order_id} className="hover:bg-gray-50">
-                    <td className="px-6 py-3 font-medium text-gray-700">#{order.order_id}</td>
-                    <td className="px-6 py-3">
-                      <p className="text-sm font-bold text-gray-800">{order.User?.username}</p>
-                      <p className="text-xs text-gray-500">{order.User?.email}</p>
+                    <td className="px-6 py-2 font-medium text-gray-700">#{order.order_id}</td>
+                    <td className="flex gap-4 items-center px-3 py-2">
+                      <img src={getAvatarUrl(order.User?.profile_pic)} alt={order.User?.username} className="w-8 h-8 rounded-full object-cover border" />
+                      <div>
+                        <p className="text-sm font-bold text-gray-800">{order.User?.username}</p>
+                        <p className="text-xs text-gray-500">{order.User?.email}</p>
+                      </div>
                     </td>
-                    <td className="px-6 py-3 font-semibold text-gray-700">Rp {parseInt(order.grand_total).toLocaleString()}</td>
-                    <td className="px-6 py-3 text-sm text-gray-500">{new Date(order.created_at).toLocaleDateString('id-ID', { day: 'numeric', month: 'short', year: 'numeric' })}</td>
-                    <td className="px-6 py-3">{getStatusBadge(order.status)}</td>
-                    <td className="px-6 py-3 flex justify-center gap-2">
+                    <td className="px-6 py-2 font-semibold text-gray-700">Rp {parseInt(order.grand_total).toLocaleString()}</td>
+                    <td className="px-6 py-2 text-sm text-gray-500">{new Date(order.created_at).toLocaleDateString('id-ID', { day: 'numeric', month: 'short', year: 'numeric' })}</td>
+                    <td className="px-6 py-2">{getStatusBadge(order.status)}</td>
+                    <td className="px-6 py-2 flex justify-center gap-2">
                       <button onClick={() => setSelectedOrder(order)} className="p-2 bg-blue-50 text-blue-600 rounded hover:bg-blue-100 cursor-pointer active:scale-95" title="Lihat Detail">
                         <FaEye />
                       </button>
@@ -195,6 +242,10 @@ const ManageOrders = () => {
                           <FaTruck /> Kirim
                         </button>
                       )}
+
+                      <button onClick={() => handleDeleteOrder(order.order_id)} className="p-2 bg-red-50 text-red-600 rounded hover:bg-red-100 cursor-pointer active:scale-95" title="Hapus Pesanan">
+                        <FaTrash />
+                      </button>
                     </td>
                   </tr>
                 ))
@@ -202,6 +253,30 @@ const ManageOrders = () => {
             </tbody>
           </table>
         </div>
+
+        {totalPages > 1 && (
+          <div className="flex justify-between items-center px-6 py-4 border-t border-gray-100 bg-gray-50">
+            <span className="text-sm text-gray-600">
+              Halaman {page} dari {totalPages}
+            </span>
+            <div className="flex gap-2">
+              <button
+                onClick={() => setPage((prev) => Math.max(prev - 1, 1))}
+                disabled={page === 1}
+                className={`px-3 py-1 rounded border text-sm ${page === 1 ? 'bg-gray-100 text-gray-400 cursor-not-allowed' : 'bg-white text-gray-700 hover:bg-gray-100'}`}
+              >
+                <FaChevronLeft />
+              </button>
+              <button
+                onClick={() => setPage((prev) => Math.min(prev + 1, totalPages))}
+                disabled={page === totalPages}
+                className={`px-3 py-1 rounded border text-sm ${page === totalPages ? 'bg-gray-100 text-gray-400 cursor-not-allowed' : 'bg-white text-gray-700 hover:bg-gray-100'}`}
+              >
+                <FaChevronRight />
+              </button>
+            </div>
+          </div>
+        )}
       </div>
 
       {/* --- MODAL DETAIL ORDER --- */}
@@ -232,7 +307,6 @@ const ManageOrders = () => {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 {/* Kolom Kiri: Data User & Status */}
                 <div className="space-y-4">
-                  {/* Blok 1: Status Order & Resi */}
                   <div className="bg-gray-50 p-4 rounded border border-gray-100">
                     <p className="text-xs text-gray-500 uppercase font-bold mb-1">Status Pesanan</p>
                     <div className="mb-2">{getStatusBadge(selectedOrder.status)}</div>

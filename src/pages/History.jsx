@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import api from '../config/api';
 import toast from 'react-hot-toast';
-import { FaBoxOpen, FaTruck, FaFileInvoice, FaStar, FaMapMarkerAlt } from 'react-icons/fa';
+import { FaBoxOpen, FaTruck, FaFileInvoice, FaStar, FaMapMarkerAlt, FaTrash, FaChevronLeft, FaChevronRight } from 'react-icons/fa';
 import ReviewModal from '../components/ReviewModal';
 import Swal from 'sweetalert2';
 import { getImageUrl } from '../utils/imageHelper';
@@ -11,6 +11,9 @@ const History = () => {
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
   const [activeTab, setActiveTab] = useState('all');
+
+  const [page, setPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
 
   const [isReviewOpen, setIsReviewOpen] = useState(false);
   const [selectedProductToReview, setSelectedProductToReview] = useState(null);
@@ -22,15 +25,21 @@ const History = () => {
     { id: 'processing', label: 'Diproses' },
     { id: 'shipped', label: 'Dikirim' },
     { id: 'completed', label: 'Selesai' },
+    { id: 'cancelled', label: 'Dibatalkan' },
   ];
 
   const fetchOrders = async () => {
     setLoading(true);
     try {
       const response = await api.get('/api/orders/history', {
-        params: { status: activeTab === 'all' ? '' : activeTab },
+        params: {
+          status: activeTab === 'all' ? '' : activeTab,
+          page: page,
+          limit: 5,
+        },
       });
       setOrders(response.data.orders);
+      setTotalPages(response.data.total_page);
     } catch (error) {
       console.error('Gagal memuat history', error);
     } finally {
@@ -39,13 +48,17 @@ const History = () => {
   };
 
   useEffect(() => {
-    fetchOrders();
+    setPage(1);
   }, [activeTab]);
+
+  useEffect(() => {
+    fetchOrders();
+  }, [activeTab, page]);
 
   // Helper Address
   const getAddressString = (jsonString) => {
     try {
-      const addr = JSON.parse(jsonString);
+      const addr = typeof addressData === 'string' ? JSON.parse(addressData) : addressData;
       return `${addr.address}, ${addr.city_name}, ${addr.province_name}, ${addr.postal_code}`;
     } catch (e) {
       return 'Alamat tidak tersedia';
@@ -96,6 +109,29 @@ const History = () => {
         } catch (error) {
           console.error(error);
           toast.error(error.response?.data?.message || 'Gagal mengupdate status');
+        }
+      }
+    });
+  };
+
+  const handleDeleteOrder = async (orderId) => {
+    Swal.fire({
+      title: 'Hapus Pesanan?',
+      text: 'Pesanan yang dihapus tidak dapat dikembalikan.',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#d33',
+      cancelButtonColor: '#3085d6',
+      confirmButtonText: 'Ya, Hapus',
+      cancelButtonText: 'Batal',
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        try {
+          await api.delete(`/api/orders/${orderId}`);
+          toast.success('Pesanan berhasil dihapus');
+          fetchOrders();
+        } catch (error) {
+          toast.error(error.response?.data?.message || 'Gagal menghapus pesanan');
         }
       }
     });
@@ -241,6 +277,12 @@ const History = () => {
                 </div>
 
                 <div className="flex flex-col sm:flex-row gap-2 md:gap-3 w-full md:w-auto">
+                  {(order.status === 'pending' || order.status === 'cancelled') && (
+                    <button onClick={() => handleDeleteOrder(order.order_id)} className="p-2 border border-red-200 text-red-500 rounded-lg hover:bg-red-50 transition-colors cursor-pointer active:scale-90" title="Hapus Pesanan">
+                      <FaTrash size={14} />
+                    </button>
+                  )}
+
                   <Link to={`/invoice/${order.order_id}`} className="text-center px-4 py-2 border border-gray-300 text-gray-700 font-bold rounded-lg text-sm hover:bg-white transition-all cursor-pointer duration-200 active:scale-90">
                     Invoice
                   </Link>
@@ -260,6 +302,25 @@ const History = () => {
               </div>
             </div>
           ))}
+
+          {/* Pagination Controls */}
+          {totalPages > 1 && (
+            <div className="flex justify-center items-center gap-4 mt-8">
+              <button onClick={() => setPage((prev) => Math.max(prev - 1, 1))} disabled={page === 1} className={`p-2 rounded-full border ${page === 1 ? 'text-gray-300 border-gray-200' : 'text-gray-700 border-gray-300 hover:bg-gray-100'}`}>
+                <FaChevronLeft />
+              </button>
+              <span className="text-sm font-bold text-gray-700">
+                Halaman {page} dari {totalPages}
+              </span>
+              <button
+                onClick={() => setPage((prev) => Math.min(prev + 1, totalPages))}
+                disabled={page === totalPages}
+                className={`p-2 rounded-full border ${page === totalPages ? 'text-gray-300 border-gray-200' : 'text-gray-700 border-gray-300 hover:bg-gray-100'}`}
+              >
+                <FaChevronRight />
+              </button>
+            </div>
+          )}
         </div>
       )}
 
