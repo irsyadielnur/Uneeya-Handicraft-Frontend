@@ -20,9 +20,9 @@ const Favorite = () => {
   }
 
   return (
-    <div className="pt-6 pb-12 px-4 md:px-12 mt-5 md:mt-0">
+    <div className="pt-0 md:pt-6 pb-10 px-4 md:px-12 mt-5 md:mt-0">
       <div className="mb-4 md:mb-8 border-b-2 border-gray-500 pb-1 md:pb-4">
-        <Link to="/products" className="text-gray-600 hover:text-black font-semibold flex items-center gap-2">
+        <Link to="/products" className="text-xs md:text-sm text-gray-600 hover:text-black font-semibold flex items-center gap-2 pb-2 md:pb-0">
           ← Lanjut Belanja
         </Link>
 
