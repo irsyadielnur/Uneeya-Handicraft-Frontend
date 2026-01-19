@@ -37,7 +37,7 @@ const Checkout = () => {
   });
 
   // RajaOngkir Starter
-  const SUPPORTED_COURIERS = ['jne']; // ['jne', 'pos', 'tiki'];
+  const SUPPORTED_COURIERS = ['jne', 'pos', 'tiki']; // ['jne', 'pos', 'tiki'];
 
   useEffect(() => {
     dispatch(fetchCart());
