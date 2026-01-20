@@ -10,7 +10,6 @@ import sendIcon from '../../assets/icons/right.png';
 import uneeyaIcon from '../../assets/icons/uneeya.png';
 import { FaRegCircleXmark, FaRegTrashCan } from 'react-icons/fa6';
 
-// Gunakan base URL API kamu
 const BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 const Chatbot = () => {
@@ -239,7 +238,6 @@ const Chatbot = () => {
                       onClick={() => handleProductClick(prod.id)}
                       className="group relative flex items-start gap-3 w-full bg-white border border-gray-200 rounded-xl p-2 cursor-pointer shadow-sm hover:shadow-md hover:border-[#6d4c41] transition-all duration-300"
                     >
-                      {/* 1. GAMBAR PRODUK */}
                       <div className="w-20 h-20 shrink-0 rounded-lg overflow-hidden bg-gray-100 border border-gray-100">
                         <img
                           src={getImageUrl(prod.image)}
@@ -251,25 +249,15 @@ const Chatbot = () => {
                         />
                       </div>
 
-                      {/* 2. DETAIL INFORMASI */}
                       <div className="flex flex-col flex-1 min-w-0 justify-between h-20">
-                        {/* Bagian Atas: Kategori & Nama */}
                         <div>
-                          {/* Kategori (Teks Kecil) */}
                           <p className="text-[10px] text-gray-500 uppercase font-medium tracking-wide mb-0.5">{prod.category || 'Handicraft'}</p>
-
-                          {/* Nama Produk (Maks 2 Baris) */}
                           <h4 className="text-sm font-bold text-gray-800 leading-tight line-clamp-2 group-hover:text-[#6d4c41] transition-colors" title={prod.name}>
                             {prod.name}
                           </h4>
                         </div>
-
-                        {/* Bagian Bawah: Harga & Rating */}
                         <div className="flex items-center justify-between mt-auto">
-                          {/* Harga */}
                           <span className="text-sm font-bold text-[#6d4c41]">Rp{prod.price?.toLocaleString('id-ID')}</span>
-
-                          {/* Rating (Badge Kuning) */}
                           <div className="flex items-center gap-1 bg-yellow-50 px-1.5 py-0.5 rounded-md border border-yellow-100">
                             <svg className="w-5 h-5 text-yellow-500 fill-current" viewBox="0 0 24 24">
                               <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
