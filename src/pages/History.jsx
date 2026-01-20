@@ -58,9 +58,16 @@ const History = () => {
   // Helper Address
   const getAddressString = (jsonString) => {
     try {
-      const addr = typeof addressData === 'string' ? JSON.parse(addressData) : addressData;
-      return `${addr.address}, ${addr.city_name}, ${addr.province_name}, ${addr.postal_code}`;
+      if (!jsonString) return 'Alamat tidak tersedia';
+      const addr = typeof jsonString === 'string' ? JSON.parse(jsonString) : jsonString;
+      const address = addr.address || '';
+      const city = addr.city_name || '';
+      const province = addr.province_name || '';
+      const postal = addr.postal_code || '';
+
+      return `${address}, ${city}, ${province}, ${postal}`;
     } catch (e) {
+      console.error('Error parsing address:', e);
       return 'Alamat tidak tersedia';
     }
   };
