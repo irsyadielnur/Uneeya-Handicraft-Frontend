@@ -3,17 +3,19 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { loginUser, clearError } from '../../redux/slices/authSlice';
 import toast from 'react-hot-toast';
+import { FaEye, FaEyeSlash } from 'react-icons/fa';
 
 const Login = () => {
   const [formData, setFormData] = useState({
     email: '',
     password: '',
-    confirmPassword: '',
   });
+
+  const [showPassword, setShowPassword] = useState(false);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { isLoading, error, isAuthenticated } = useSelector((state) => state.auth);
+  const { isLoading, error } = useSelector((state) => state.auth);
 
   useEffect(() => {
     if (error) {
@@ -43,8 +45,7 @@ const Login = () => {
     }
   };
 
-  const isPasswordMatch = formData.password === formData.confirmPassword;
-  const isFormValid = formData.email && formData.password && formData.confirmPassword && isPasswordMatch;
+  const isFormValid = formData.email && formData.password;
 
   return (
     <div className="relative min-h-screen flex items-center justify-center">
@@ -52,46 +53,38 @@ const Login = () => {
         ← Kembali ke Home
       </Link>
 
-      <div className="w-full max-w-md p-6 bg-white rounded shadow-md">
+      <div className="w-full max-w-md p-6 bg-cream rounded shadow-lg border border-gray-300">
         <h2 className="text-2xl font-bold text-center mb-6">Login Uneeya</h2>
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
             <label className="block text-sm font-medium mb-1">Email</label>
-            <input type="email" name="email" value={formData.email} onChange={handleChange} placeholder="Masukan email..." required className="w-full border p-2 rounded" />
+            <input
+              type="email"
+              name="email"
+              value={formData.email}
+              onChange={handleChange}
+              placeholder="Masukan email..."
+              required
+              className="w-full border p-2 border-gray-500 rounded pr-10 focus:ring-2 focus:ring-yellow-400 focus:border-transparent outline-none transition"
+            />
           </div>
 
           <div>
             <label className="block text-sm font-medium mb-1">Password</label>
-            <input type="password" name="password" value={formData.password} onChange={handleChange} placeholder="Masukan password..." required className="w-full border p-2 rounded" />
-          </div>
-
-          <div>
-            <label className="block text-sm font-medium mb-1">Konfirmasi Password</label>
-            <input
-              type="password"
-              name="confirmPassword"
-              value={formData.confirmPassword}
-              onChange={handleChange}
-              placeholder="Ulangi password..."
-              required
-              className={`w-full border p-2.5 rounded-lg outline-none transition ${
-                formData.confirmPassword && !isPasswordMatch
-                  ? 'border-red-500 bg-red-50 focus:border-red-500 focus:ring-red-200'
-                  : formData.confirmPassword && isPasswordMatch
-                  ? 'border-green-500 bg-green-50 focus:border-green-500 focus:ring-green-200'
-                  : 'border-gray-300 focus:ring-2 focus:ring-yellow-400'
-              }`}
-            />
-            {formData.confirmPassword && !isPasswordMatch && (
-              <p className="text-red-500 text-xs mt-1 font-medium flex items-center">
-                <span className="mr-1">⚠</span> Password tidak cocok!
-              </p>
-            )}
-            {formData.confirmPassword && isPasswordMatch && (
-              <p className="text-green-600 text-xs mt-1 font-medium flex items-center">
-                <span className="mr-1">✓</span> Password cocok.
-              </p>
-            )}
+            <div className="relative">
+              <input
+                type={showPassword ? 'text' : 'password'}
+                name="password"
+                value={formData.password}
+                onChange={handleChange}
+                placeholder="Masukan password..."
+                required
+                className="w-full border p-2 border-gray-500 rounded pr-10 focus:ring-2 focus:ring-yellow-400 focus:border-transparent outline-none transition"
+              />
+              <button type="button" onClick={() => setShowPassword(!showPassword)} className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-gray-700 cursor-pointer active:scale-95">
+                {showPassword ? <FaEyeSlash size={18} /> : <FaEye size={18} />}
+              </button>
+            </div>
           </div>
 
           <button

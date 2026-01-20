@@ -64,23 +64,47 @@ const Register = () => {
         ← Kembali ke Home
       </Link>
 
-      <div className="w-full max-w-md p-6 bg-white rounded shadow-md">
+      <div className="w-full max-w-md p-6 bg-cream rounded shadow-lg border border-gray-300">
         <h2 className="text-2xl font-bold text-center mb-6">Daftar Akun Baru</h2>
 
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
             <label className="block text-sm font-medium mb-1">Username</label>
-            <input type="text" name="username" value={formData.username} onChange={handleChange} className="w-full border p-2 rounded" placeholder="Masukkan username" required />
+            <input
+              type="text"
+              name="username"
+              value={formData.username}
+              onChange={handleChange}
+              className="w-full border p-2 border-gray-500 rounded pr-10 focus:ring-2 focus:ring-yellow-400 focus:border-transparent outline-none transition"
+              placeholder="Masukkan username"
+              required
+            />
           </div>
 
           <div>
             <label className="block text-sm font-medium mb-1">Email</label>
-            <input type="email" name="email" value={formData.email} onChange={handleChange} className="w-full border p-2 rounded" placeholder="nama@email.com" required />
+            <input
+              type="email"
+              name="email"
+              value={formData.email}
+              onChange={handleChange}
+              className="w-full border p-2 border-gray-500 rounded pr-10 focus:ring-2 focus:ring-yellow-400 focus:border-transparent outline-none transition"
+              placeholder="nama@email.com"
+              required
+            />
           </div>
 
           <div>
             <label className="block text-sm font-medium mb-1">Password</label>
-            <input type="password" name="password" value={formData.password} onChange={handleChange} className="w-full border p-2 rounded" placeholder="Buat password..." required />
+            <input
+              type="password"
+              name="password"
+              value={formData.password}
+              onChange={handleChange}
+              className="w-full border p-2 border-gray-500 rounded pr-10 focus:ring-2 focus:ring-yellow-400 focus:border-transparent outline-none transition"
+              placeholder="Buat password..."
+              required
+            />
           </div>
 
           <div>
