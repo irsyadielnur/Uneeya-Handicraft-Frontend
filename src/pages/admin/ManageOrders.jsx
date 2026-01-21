@@ -24,7 +24,7 @@ const ManageOrders = () => {
     setLoading(true);
     try {
       const params = {
-        page: page,
+        page: 1,
         limit: 1000,
         search: searchTerm,
       };
