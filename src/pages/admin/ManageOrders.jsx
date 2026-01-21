@@ -26,13 +26,18 @@ const ManageOrders = () => {
   const fetchOrders = async () => {
     setLoading(true);
     try {
+      const params = {
+        page: page,
+        limit: 10,
+        search: searchTerm,
+      };
+
+      if (filterStatus !== 'all') {
+        params.status = filterStatus;
+      }
+
       const response = await api.get('/api/orders/admin/all', {
-        params: {
-          status: filterStatus === 'all' ? '' : filterStatus,
-          page: page,
-          limit: 10,
-          search: searchTerm,
-        },
+        params: params,
       });
       setOrders(response.data.orders);
       setTotalPages(response.data.total_page);
@@ -163,7 +168,6 @@ const ManageOrders = () => {
       <div className="flex overflow-x-auto gap-2 mb-6 border-b pb-2">
         {[
           { label: 'Semua', val: 'all' },
-          { label: 'Perlu Dikemas', val: 'paid' },
           { label: 'Sedang Disiapkan', val: 'processing' },
           { label: 'Dalam Pengiriman', val: 'shipped' },
           { label: 'Selesai', val: 'completed' },
