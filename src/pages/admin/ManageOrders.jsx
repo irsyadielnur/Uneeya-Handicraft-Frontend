@@ -4,16 +4,13 @@ import { getImageUrl } from '../../utils/imageHelper';
 import api from '../../config/api';
 import toast from 'react-hot-toast';
 import Swal from 'sweetalert2';
-import { FaEye, FaTruck, FaBoxOpen, FaTimes, FaMoneyBillWave, FaSearch, FaChevronLeft, FaChevronRight, FaTrash } from 'react-icons/fa';
+import { FaEye, FaTruck, FaBoxOpen, FaTimes, FaMoneyBillWave, FaSearch, FaTrash } from 'react-icons/fa';
 
 const ManageOrders = () => {
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
   const [filterStatus, setFilterStatus] = useState('all');
   const [searchTerm, setSearchTerm] = useState('');
-
-  const [page, setPage] = useState(1);
-  const [totalPages, setTotalPages] = useState(1);
 
   // State Modal
   const [selectedOrder, setSelectedOrder] = useState(null);
@@ -28,7 +25,7 @@ const ManageOrders = () => {
     try {
       const params = {
         page: page,
-        limit: 10,
+        limit: 1000,
         search: searchTerm,
       };
 
@@ -40,7 +37,6 @@ const ManageOrders = () => {
         params: params,
       });
       setOrders(response.data.orders);
-      setTotalPages(response.data.total_page);
     } catch (error) {
       console.error(error);
       toast.error('Gagal memuat pesanan');
@@ -50,16 +46,12 @@ const ManageOrders = () => {
   };
 
   useEffect(() => {
-    setPage(1);
-  }, [filterStatus]);
-
-  useEffect(() => {
     const delayDebounceFn = setTimeout(() => {
       fetchOrders();
     }, 500);
 
     return () => clearTimeout(delayDebounceFn);
-  }, [filterStatus, page, searchTerm]);
+  }, [filterStatus, searchTerm]);
 
   // --- HANDLER STATUS ---
   const handleProcessOrder = async (orderId) => {
@@ -258,29 +250,7 @@ const ManageOrders = () => {
           </table>
         </div>
 
-        {totalPages > 1 && (
-          <div className="flex justify-between items-center px-6 py-4 border-t border-gray-100 bg-gray-50">
-            <span className="text-sm text-gray-600">
-              Halaman {page} dari {totalPages}
-            </span>
-            <div className="flex gap-2">
-              <button
-                onClick={() => setPage((prev) => Math.max(prev - 1, 1))}
-                disabled={page === 1}
-                className={`px-3 py-1 rounded border text-sm ${page === 1 ? 'bg-gray-100 text-gray-400 cursor-not-allowed' : 'bg-white text-gray-700 hover:bg-gray-100'}`}
-              >
-                <FaChevronLeft />
-              </button>
-              <button
-                onClick={() => setPage((prev) => Math.min(prev + 1, totalPages))}
-                disabled={page === totalPages}
-                className={`px-3 py-1 rounded border text-sm ${page === totalPages ? 'bg-gray-100 text-gray-400 cursor-not-allowed' : 'bg-white text-gray-700 hover:bg-gray-100'}`}
-              >
-                <FaChevronRight />
-              </button>
-            </div>
-          </div>
-        )}
+        <div className="p-4 text-center text-xs text-gray-400 bg-gray-50">Menampilkan {orders.length} Data</div>
       </div>
 
       {/* --- MODAL DETAIL ORDER --- */}
