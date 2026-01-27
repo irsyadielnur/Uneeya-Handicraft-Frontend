@@ -33,7 +33,7 @@ const SimilarProductsByID = ({ currentProductId }) => {
       <h3 className="text-2xl font-bold text-gray-900 mb-6 border-l-4 border-primary pl-4">Produk Serupa Pilihan Kami</h3>
 
       <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-        {recommendations.map((item) => {
+        {recommendations.slice(0, 5).map((item) => {
           const productData = item.product ? item.product : item;
           // if (String(productData.product_id) === String(currentProductId)) return null;
           if (!productData || !productData.product_id) return null;
