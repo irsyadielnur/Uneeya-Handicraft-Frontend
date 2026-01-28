@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useMemo } from 'react';
+import React, { useEffect, useState, useMemo, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useSearchParams } from 'react-router-dom';
 import { fetchProducts } from '../redux/slices/productSlice';
@@ -63,14 +63,17 @@ const Catalog = () => {
     setCurrentPage(1);
   }, [selectedCategory, sortOption]);
 
-  const sortedCategories = [...categories].sort((a, b) => {
-    if (a === 'All') return -1;
-    if (b === 'All') return 1;
-    if (a === 'Lainnya') return 1;
-    if (b === 'Lainnya') return -1;
+  const sortedCategories = useMemo(() => {
+    const uniqueCats = ['All', ...new Set(products.map((p) => p.category || 'Uncategorized'))];
 
-    return a.localeCompare(b);
-  });
+    return uniqueCats.sort((a, b) => {
+      if (a === 'All') return -1;
+      if (b === 'All') return 1;
+      if (a === 'Lainnya') return 1;
+      if (b === 'Lainnya') return -1;
+      return a.localeCompare(b);
+    });
+  }, [products]);
 
   const sortLabels = {
     default: 'Paling Baru',
