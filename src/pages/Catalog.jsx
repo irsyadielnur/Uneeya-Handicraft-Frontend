@@ -63,13 +63,22 @@ const Catalog = () => {
     setCurrentPage(1);
   }, [selectedCategory, sortOption]);
 
-  const categories = ['All', ...new Set(products.map((p) => p.category || 'Uncategorized'))];
+  const sortedCategories = [...categories].sort((a, b) => {
+    if (a === 'All') return -1;
+    if (b === 'All') return 1;
+    if (a === 'Lainnya') return 1;
+    if (b === 'Lainnya') return -1;
+
+    return a.localeCompare(b);
+  });
+
   const sortLabels = {
     default: 'Paling Baru',
     'price-low': 'Harga: Rendah ke Tinggi',
     'price-high': 'Harga: Tinggi ke Rendah',
     rating: 'Rating Tertinggi',
   };
+
   const paginate = (pageNumber) => {
     setCurrentPage(pageNumber);
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -93,7 +102,7 @@ const Catalog = () => {
                 <h3 className="font-bold text-gray-800">Kategori</h3>
               </div>
               <ul className="flex flex-col gap-2 overflow-x-auto pb-2 lg:pb-0 space-y-0">
-                {categories.map((cat, index) => (
+                {sortedCategories.map((cat, index) => (
                   <li key={index} className="shrink-0">
                     <button
                       onClick={() => setSelectedCategory(cat)}
