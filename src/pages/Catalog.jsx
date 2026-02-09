@@ -69,10 +69,7 @@ const Catalog = () => {
     return uniqueCats.sort((a, b) => {
       if (a === 'All') return -1;
       if (b === 'All') return 1;
-
-      if (a === 'Cardigan') return 3;
-      if (b === 'Tas & Dompet') return 2;
-
+      
       if (a === 'Lainnya') return 1;
       if (b === 'Lainnya') return -1;
       return a.localeCompare(b);
